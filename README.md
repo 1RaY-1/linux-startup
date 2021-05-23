@@ -1,6 +1,7 @@
 # bash-startup
 This bash program makes other bash programs run at startup
 
+Tested on Linux Mint, Fedora, Parrot OS
 # How it works
 This program does this things:
 
