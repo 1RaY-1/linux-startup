@@ -29,9 +29,12 @@ If after executing: systemctl status YOUR-SERVICE-FILE
 you recive an error which is saying: 'Permissions denied', you probably need to edit '/etc/selinux/config' and change line:
 SELINUX=enforcing with SELINUX=permissive
 
-If you recive an error which is saying that you have a bad Unit file, you can change your .service file and try changing:
-[Unit] with [UNIT] or [unit]
+If you recive an error which is saying that you have a bad Unit file, you can edit your .service file and try changing:
+[Unit] with [UNIT] or with [unit]
 
 Maybe you can enctounter more errors, but i didn't
 
+# Note
 Don't forget that at any time you can edit, disable or remove your .service file
+
+And don't forget that you can modify this program so it will work perfectly for you
