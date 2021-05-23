@@ -133,7 +133,7 @@ register_on_startup(){
     target_file=${target_file##*/}
     
     # Don't remove underscores, because this program won't write all this config to the service file, anyways you can edit this service file later
-    config_for_target_service_file="[UNIT]\nDescription=Startup_bash_script\n\n[Service]\nExecStart=${dest_dir_for_target_file}/${target_file}\n\n[Install]\nWantedBy=multi-user.target\n"
+    config_for_target_service_file="[Unit]\nDescription=Startup_bash_script\n\n[Service]\nExecStart=${dest_dir_for_target_file}/${target_file}\n\n[Install]\nWantedBy=multi-user.target\n"
     
     echo "Editing ${dest_dir_for_target_service_file}${target_service_file}"
     sudo printf ${config_for_target_service_file} > ${dest_dir_for_target_service_file}${target_service_file}
