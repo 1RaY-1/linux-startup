@@ -5,20 +5,21 @@ Tested on **Linux Mint, Fedora, Parrot OS**
 # How it works
 This program does this things:
 
-Locate your startup bash script and make sure that it exists
-Make sure that needed directory for you script exists
-Move your script to other directory (if you want to)
-Change it's permissions
-Create and edit .service file
-Reload daemon
-Enable and start .service file which will execute yout bash script at every startup
+1. Locate your startup bash script and make sure that it exists
+2. Make sure that needed directory for you script exists
+3. Move your script to other directory (if you want to)
+4. Change it's permissions
+5. Create and edit .service file
+6. Reload daemon
+7. Enable and start .service file which will execute yout bash script at every startup
 
 # Usage
-Run:
-'''
+Run with
+```
 sudo bash run-at-startup.sh
-'''
-If you do not run this program with 'sudo' command, this programm will probably not work.
+```
+
+If you do not run this program with `sudo command`, this programm will probably not work.
 Then you simply have to do few things.
 
 First of all you  have to enter your bash script's filename, it can be or full path or just a filename, if it's located in the same directory where is this program is located.
@@ -37,9 +38,12 @@ SELINUX=enforcing with SELINUX=permissive
 If you recive an error which is saying that you have a bad Unit file, you can edit your .service file and try changing:
 [Unit] with [UNIT] or with [unit]
 
-Maybe you can enctounter more not understandable errors, but i didn't
+Maybe you can enctounter more not understandable errors, but i didn't.
 
 # Note
-Don't forget that at any time you can edit, disable or remove your .service file.
+If this program isn't working for you and you can't understand what's happening, don't try to fix the problems, just make your script running at startup manually.
 
-And don't forget that you can modify this program so it will work perfectly for you.
+But if this program is working for you, then:
+- Don't forget that at any time you can edit, disable or remove your .service file.
+
+- And don't forget that you can modify this program so it will work perfectly for you.
