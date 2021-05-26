@@ -14,6 +14,7 @@ Reload daemon
 Enable and start .service file which will execute yout bash script at every startup
 
 # Usage
+Run:
 '''
 sudo bash run-at-startup.sh
 '''
