@@ -35,7 +35,11 @@ You can encounter problems, so let's see some solutions for some problems.
 If after executing: systemctl status **YOUR-SERVICE-FILE**
 you recive an error which is saying: **Permissions denied**, you probably need to edit **/etc/selinux/config** and change line:
 ```
-SELINUX=enforcing with SELINUX=permissive
+SELINUX=enforcing 
+```
+with
+```
+SELINUX=permissive
 ```
 
 Or if you recive an error which is saying that you have a bad **Unit** file, you can edit your .service file and try changing:
