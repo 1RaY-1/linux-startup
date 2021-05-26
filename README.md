@@ -23,18 +23,20 @@ sudo bash run-at-startup.sh
 
 Then you simply have to do few things.
 
-First of all you  have to enter your bash script's filename, it can be or full path or just a filename, if it's located in the same directory where is this program is located.
+1. First of all you  have to enter your bash script's filename, it can be or full path or just a filename, if it's located in the same directory where is this program is located.
 
-Then you have to decide if you want your script to be located in other directory or not (the program will ask you).
+2. Then you have to decide if you want your script to be located in other directory or not (the program will ask you).
 
-And finally decide if you're ok with things which this program will do (the program will ask you).
+3. And finally decide if you're ok with things which this program will do (the program will ask you).
 
 # Problems
-You can encounter problems, so let's see some solutions for some problems
+You can encounter problems, so let's see some solutions for some problems.
 
 If after executing: systemctl status YOUR-SERVICE-FILE 
 you recive an error which is saying: 'Permissions denied', you probably need to edit '/etc/selinux/config' and change line:
+```
 SELINUX=enforcing with SELINUX=permissive
+```
 
 If you recive an error which is saying that you have a bad Unit file, you can edit your .service file and try changing:
 [Unit] with [UNIT] or with [unit]
