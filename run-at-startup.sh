@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # bash program to make any bash script run at startup
-# it is made of functions, so you can easily modify it
+# it's made of functions, so you can easily modify it
 
 # configure
 configure(){
