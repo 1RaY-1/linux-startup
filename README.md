@@ -19,7 +19,7 @@ Run with
 sudo bash run-at-startup.sh
 ```
 
-**If you do not run this program with `sudo` command, it program will probably not work.**
+**If you do not run this program with `sudo` command, it will probably not work.**
 
 Then you simply have to do few things.
 
