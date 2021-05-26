@@ -8,7 +8,7 @@ This program does this things:
 1. Locate your startup bash script and make sure that it exists
 2. Make sure that needed directory for you script exists
 3. Move your script to other directory (if you want to)
-4. Change it's permissions
+4. Make it executable
 5. Create and edit .service file
 6. Reload daemon
 7. Enable and start .service file which will execute yout bash script at every startup
