@@ -6,7 +6,7 @@ Tested on **Linux Mint, Fedora, Parrot OS**
 This program does this things:
 
 1. Locate your startup bash script and make sure that it exists
-2. Make sure that needed directory for you script exists
+2. Make sure that needed directory for your script exists
 3. Move your script to other directory (if you want to)
 4. Make it executable
 5. Create and edit .service file
