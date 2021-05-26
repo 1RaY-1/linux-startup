@@ -19,7 +19,8 @@ Run with
 sudo bash run-at-startup.sh
 ```
 
-If you do not run this program with `sudo` command, this program will probably not work.
+***If you do not run this program with `sudo` command, it program will probably not work.***
+
 Then you simply have to do few things.
 
 First of all you  have to enter your bash script's filename, it can be or full path or just a filename, if it's located in the same directory where is this program is located.
