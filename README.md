@@ -45,7 +45,7 @@ SELINUX=permissive
 Or if you recive an error which is saying that you have a bad **Unit** file, you can edit your .service file and try changing:
 **[Unit]** with **[UNIT]** or with **[unit]**
 
-Maybe you can enctounter more not understandable errors, but I didn't.
+Maybe you can encounter more not understandable errors, but I didn't.
 
 # Note
 If this program isn't working for you and you can't understand what's happening, don't try to fix the problems, just make your script running at startup manually (it's not so difficult).
