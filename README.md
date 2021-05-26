@@ -32,7 +32,7 @@ Then you simply have to do few things.
 # Problems
 You can encounter problems, so let's see some solutions for some problems.
 
-If after executing: systemctl status YOUR-SERVICE-FILE 
+If after executing: systemctl status **YOUR-SERVICE-FILE**
 you recive an error which is saying: **Permissions denied**, you probably need to edit **/etc/selinux/config** and change line:
 ```
 SELINUX=enforcing with SELINUX=permissive
@@ -41,12 +41,12 @@ SELINUX=enforcing with SELINUX=permissive
 Or if you recive an error which is saying that you have a bad **Unit** file, you can edit your .service file and try changing:
 **[Unit]** with **[UNIT]** or with **[unit]**
 
-Maybe you can enctounter more not understandable errors, but i didn't.
+Maybe you can enctounter more not understandable errors, but I didn't.
 
 # Note
 If this program isn't working for you and you can't understand what's happening, don't try to fix the problems, just make your script running at startup manually (it's not so difficult).
 
-But if this program workings fine for you, then:
+But if this program works fine for you, then:
 - Don't forget that at any time you can edit, disable or remove your .service file.
 
 - And don't forget that you can modify this program so it will work perfectly for you.
