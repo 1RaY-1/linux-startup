@@ -1,17 +1,18 @@
-# bash-startup
+# About
 This bash program makes other bash programs run at startup
 
 Tested on **Linux Mint, Fedora, Parrot OS**
 # How it works
 This program does this things:
 
-1. Locate your startup bash script and make sure that it exists
-2. Make sure that needed directory for your script exists
-3. Move your script to other directory (if you want to)
-4. Make it executable
-5. Create and edit .service file
-6. Reload daemon
-7. Enable and start .service file which will execute yout bash script at every startup
+1. Locate your startup bash script
+2. Ask you if you want to move your script to other directory
+3. Check if your script and needed directory for your script exists
+4. Move your script to other directory (if you want to)
+5. Make it executable
+6. Create and edit .service file
+7. Reload daemon
+8. Enable and start .service file which will execute yout bash script at every startup
 
 # Usage
 Run with
@@ -48,7 +49,7 @@ Or if you recive an error which is saying that you have a bad **Unit** file, you
 Maybe you can encounter more not understandable errors, but I didn't.
 
 # Note
-If this program isn't working for you and you can't understand what's happening, don't try to fix the problems, just make your script running at startup manually (it's not so difficult).
+If this program is not working for you and you can't understand what's happening, don't try to fix the problems, just make your script running at startup manually (it's not so difficult).
 
 But if this program works fine for you, then:
 - Don't forget that at any time you can edit, disable or remove your .service file.
