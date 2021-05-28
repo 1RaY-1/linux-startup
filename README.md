@@ -31,10 +31,17 @@ Then you simply have to do few things.
 3. And finally decide if you're ok with things which this program will do (the program will ask you).
 
 # Problems
-You can encounter problems, so let's see some solutions for some problems.
+You can encounter problems.
 
-If after executing: systemctl status **YOUR-SERVICE-FILE**
-you recive an error which is saying: **Permissions denied**, you probably need to edit **/etc/selinux/config** and change line:
+To check if you have some problems with this script or not, you can try making script **test.sh** startup that creates on your desktop directory folder named **ITS-WORKING**
+
+So let's see some solutions for some problems.
+
+If after executing: 
+```
+systemctl status **YOUR-SERVICE-FILE**
+```
+You recive an error which is saying: **Permissions denied**, you probably need to edit **/etc/selinux/config** and change line:
 ```
 SELINUX=enforcing 
 ```
