@@ -1,5 +1,5 @@
 # About
-This bash program makes other bash programs run at startup
+This bash program makes other bash programs startup
 
 Tested on **Linux Mint, Fedora, Parrot OS**
 # How it works
