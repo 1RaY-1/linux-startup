@@ -39,7 +39,7 @@ So let's see some solutions for some problems.
 
 If after executing: 
 ```
-systemctl status **YOUR-SERVICE-FILE**
+systemctl status YOUR-SERVICE-FILE
 ```
 You recive an error which is saying: **Permissions denied**, you probably need to edit **/etc/selinux/config** and change line:
 ```
