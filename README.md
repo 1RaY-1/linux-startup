@@ -10,9 +10,9 @@ This program does this things:
 3. Check if your script and needed directory for your script exists
 4. Move your script to other directory (if you want to)
 5. Make it executable
-6. Create and edit .service file
+6. Create and edit service file
 7. Reload daemon
-8. Enable and start .service file which will execute yout bash script at every startup
+8. Enable and start service file which will execute yout bash script at every startup
 
 # Usage
 Run with
@@ -50,15 +50,15 @@ with
 SELINUX=permissive
 ```
 
-Or if you recive an error which is saying that you have a bad **Unit** file, you can edit your .service file and try changing:
+Or if you recive an error which is saying that you have a bad **Unit** file, you can edit your service file and try changing:
 **[Unit]** with **[UNIT]** or with **[unit]**
 
 Maybe you can encounter more not understandable errors, but I didn't.
 
 # Note
-If this program is not working for you and you can't understand what's happening, don't try to fix the problems, just make your script running at startup manually (it's not so difficult).
+If this program is not working for you and you can't understand what's happening, don't try to fix the problems, just make your script startup manually (it's not so difficult).
 
 But if this program works fine for you, then:
-- Don't forget that at any time you can edit, disable or remove your .service file.
+- Don't forget that at any time you can edit, disable or remove your service file.
 
 - And don't forget that you can modify this program so it will work perfectly for you.
