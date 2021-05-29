@@ -45,11 +45,10 @@ do_it(){
     chmod +x ${needed_dir}${needed_file%.*}
 
     echo "Done"
-    echo 
-  "
+    echo "
 Now you can easily execute this script by typing: '${needed_file%.*}' from any directory
 To remove it, type: sudo rm ${needed_dir}${needed_file%.*}
-  "
+"
 }
 
 check_for_problems
