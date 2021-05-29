@@ -5,7 +5,7 @@ You can also make it a **bin** command by running **makeit-a-bin-command.sh**, s
 
 Tested on **Linux Mint, Fedora, Parrot OS**
 # How it works
-This program does this things:
+The main program (makeit-startup.sh) does this things:
 
 1. Locate your startup bash script
 2. Ask you if you want to move your script to other directory
@@ -22,7 +22,7 @@ Run with
 sudo bash run-at-startup.sh
 ```
 
-**If you do not run this program with `sudo` command, it will probably not work.**
+**Dont't forget that you have to run it with `sudo` command.**
 
 Then you simply have to do few things.
 
@@ -35,11 +35,11 @@ Then you simply have to do few things.
 # Problems
 You can encounter problems.
 
-To check if you have some problems with this script or not, you can try making script **test.sh** (which is in **test** folder) startup, this script creates on your desktop directory folder named **ITS-WORKING**
+To check if you have some problems with this script or not, you can try making script **test.sh** (which is in **test** folder) startup, this script creates on your desktop directory, directory named **ITS-WORKING**
 
 So if you execute script **makeit-startup.sh** and try making **test.sh** startup and, after that, you see that you have a new directory named **ITS-WORKING** on Desktop, then it means that you don't have any problems with this program.
 
-So let's see some solutions for some problems.
+But if you encounter problems, let's see some solutions for some problems.
 
 If after executing: 
 ```
@@ -64,5 +64,5 @@ If this program is not working for you and you can't understand what's happening
 
 But if this program works fine for you, then:
 - Don't forget that at any time you can edit, disable or remove your service file.
-
-- And don't forget that you can modify this program so it will work perfectly for you.
+- Don't forget that you can modify this program so it will work perfectly for you.
+- Don't forget that you can run **makeit-a-bin-command.sh** to run this script from any directory at any time.
