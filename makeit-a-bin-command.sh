@@ -1,3 +1,5 @@
+#!/bin/bash
+
 needed_file=makeit-startup.sh
 needed_dir=/bin/
 
