@@ -3,6 +3,20 @@
 needed_file=makeit-startup.sh
 needed_dir=/bin/
 
+check_for_problems(){
+
+# check if script is running as root
+    if [ $EUID -ne 0 ]; then
+        echo "Please run me as root"
+        exit
+    fi
+
+    if [ ! -f ${needed_file} ]; then
+	echo "File ${needed_file} does not exist!"
+        exit
+    fi
+}
+
 ask_if_ok(){
     echo "
 This script will:
@@ -25,20 +39,6 @@ So you will be able to run this program with a single command from any directory
     esac
 }
 
-check_for_problems(){
-
-# check if script is running as root
-    if [ $EUID -ne 0 ]; then
-        echo "Please run me as root"
-        exit
-    fi
-
-    if [ ! -f ${needed_file} ]; then
-	echo "File ${needed_file} does not exist!"
-        exit
-    fi
-}
-
 do_it(){
     sudo cp ${needed_file} ${needed_dir}${needed_file%.*}
 
@@ -52,6 +52,6 @@ To remove it, type: sudo rm ${needed_dir}${needed_file%.*}
   "
 }
 
-ask_if_ok
 check_for_problems
+ask_if_ok
 do_it
