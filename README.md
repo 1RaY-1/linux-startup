@@ -35,7 +35,7 @@ Then you simply have to do few things.
 # Problems
 You can encounter problems.
 
-To check if you have some problems with this script or not, you can try making script **test.sh** startup that creates on your desktop directory folder named **ITS-WORKING**
+To check if you have some problems with this script or not, you can try making script **test.sh** (which is in **test** folder) startup that creates on your desktop directory folder named **ITS-WORKING**
 
 So let's see some solutions for some problems.
 
