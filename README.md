@@ -17,7 +17,7 @@ The main program (makeit-startup.sh) does this things:
 8. Enable and start service file which will execute yout bash script at every startup
 
 # Usage
-Run with
+Run main file with
 ```
 sudo bash run-at-startup.sh
 ```
