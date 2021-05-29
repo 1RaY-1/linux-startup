@@ -27,6 +27,12 @@ So you will be able to run this program with a single command from any directory
 
 check_for_problems(){
 
+# check if script is running as root
+    if [ $EUID -ne 0 ]; then
+        echo "Please run me as root"
+        exit
+    fi
+
     if [ ! -f ${needed_file} ]; then
 	echo "File ${needed_file} does not exist!"
         exit
