@@ -19,7 +19,7 @@ The main program (makeit-startup.sh) does this things:
 # Usage
 Run main file with
 ```
-sudo bash run-at-startup.sh
+sudo bash makeit-startup.sh
 ```
 
 **Dont't forget that you have to run it with `sudo` command.**
