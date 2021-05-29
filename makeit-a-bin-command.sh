@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# This script creates a new /bin command, that runs the main file from any directory at any time
+
 needed_file=makeit-startup.sh
 needed_dir=/bin/
 
