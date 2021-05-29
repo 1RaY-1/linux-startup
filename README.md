@@ -37,6 +37,8 @@ You can encounter problems.
 
 To check if you have some problems with this script or not, you can try making script **test.sh** (which is in **test** folder) startup, this script creates on your desktop directory folder named **ITS-WORKING**
 
+So if you execute script **makeit-startup.sh** and try making **test.sh** startup and, after that, you see that you have a new directory named **ITS-WORKING** on Desktop, then it means that you don't have any problems with this program.
+
 So let's see some solutions for some problems.
 
 If after executing: 
