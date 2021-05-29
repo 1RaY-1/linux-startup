@@ -1,6 +1,8 @@
 # About
 This bash program makes other bash programs startup
 
+You can also make it a **bin** command by running **makeit-a-bin-command.sh**, so you will be able to execute it as a command from any directory.
+
 Tested on **Linux Mint, Fedora, Parrot OS**
 # How it works
 This program does this things:
