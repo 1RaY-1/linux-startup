@@ -55,10 +55,16 @@ Options:
     esac
 }
 
-# check if everything is ok, to not encounter any errors
+# check if everything is ok
 check_if_ok(){
     printf "Checking some things...\n"
     
+    # check if script is running as root
+    if [ $EUID -ne 0 ]; then
+        echo "Please run me as root"
+        exit
+    fi
+
     # check if needed file exists (In our dir)
     if [ $choice -eq 1 ]; then
         if [ ! -f "$target_file" ]; then
