@@ -1,5 +1,5 @@
 # About
-This program **makeit-startup.sh** makes other bash programs startup.
+Program **makeit-startup.sh** makes other bash programs startup.
 
 You can also make it a **bin** command by running **makeit-a-bin-command.sh**, so you will be able to execute it as a command from any directory.
 
