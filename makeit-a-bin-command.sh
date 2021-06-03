@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This script creates a new /bin command, that runs the main file from any directory at any time
+# This script copies main file to /bin directory, so you'll be able to run the main file with a single command (but with sudo command) from any directory
 
 needed_file=makeit-startup.sh
 needed_dir=/bin/
