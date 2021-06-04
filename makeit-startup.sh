@@ -124,7 +124,7 @@ This program will do this things:
     esac
 }
 
-# main function to make script run on startup
+# main function to make script run at startup
 register_on_startup(){
 
     if [ $move_target_file_to_another_dir -eq 1 ]; then
