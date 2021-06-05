@@ -48,7 +48,7 @@ do_it(){
 
     echo "Done"
     echo "
-Now you can easily execute this script by typing: 'sudo ${needed_file%.*}' from any directory
+Now you can easily execute this script by typing: sudo ${needed_file%.*} from any directory
 To remove it, type: sudo rm ${needed_dir}${needed_file%.*}
 "
 }
