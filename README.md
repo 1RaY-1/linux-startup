@@ -65,4 +65,4 @@ If this program is not working for you and you can't understand what's happening
 But if this program works fine for you, then:
 - Don't forget that at any time you can edit, disable or remove your service file.
 - Don't forget that you can modify this program so it will work perfectly for you.
-- Don't forget that you can run **makeit-a-bin-command.sh** to run this script from any directory at any time.
+- Don't forget that you can run **makeit-a-bin-command.sh**, so you'll be able to run this script from any directory.
