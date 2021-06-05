@@ -9,4 +9,4 @@ mkdir /home/$username/Desktop/ITS-WORKING
 
 # you can also try:
 # mkdir /home/$USER/Desktop/ITS-WORKING
-# but it did not worl for me
+# but it did not work for me
