@@ -41,7 +41,7 @@ So if you execute script **makeit-startup.sh** and try making **test.sh** startu
 
 But if you encounter problems, let's see some solutions for some problems.
 
-If after executing: 
+- If after executing: 
 ```
 systemctl status YOUR-SERVICE-FILE
 ```
@@ -54,7 +54,7 @@ with
 SELINUX=permissive
 ```
 
-Or if you recive an error which is saying that you have a bad **Unit** file, you can edit your service file and try changing:
+- If you recive an error which is saying that you have a bad **Unit** file, you can edit your service file and try changing:
 **[Unit]** with **[UNIT]** or with **[unit]**
 
 Maybe you can encounter more not understandable errors, but I didn't.
