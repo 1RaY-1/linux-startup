@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# bash program to make any bash script run at startup
+# bash program to make any bash scripts run at startup
+
 # it's made of functions, so you can easily modify it
 
 # configure
@@ -58,38 +59,44 @@ Options:
 # check if everything is ok
 check_if_ok(){
     printf "Checking some things...\n"
+
+    problems=()
     
     # check if script is running as root
     if [ $EUID -ne 0 ]; then
-        echo "Please run me as root"
-        exit
+        problems+=("Please run me as root")
     fi
 
     # check if needed file exists (In our dir)
     if [ $choice -eq 1 ]; then
         if [ ! -f "$target_file" ]; then
-            echo "File: ' ${target_file} ' does not exist!"
-            exit
+            problems+=("File: ' ${target_file} ' does not exist!")
         fi
     fi
     
     # check if needed directory exists
     if [ $move_target_file_to_another_dir -eq 1 ]; then
         if [ ! -d $dest_dir_for_target_file ]; then
-            echo "Directory: ' ${dest_dir_for_target_file} ' does not exist!"
-            exit
+            problems+=("Directory: ' ${dest_dir_for_target_file} ' does not exist!")
         fi
     fi
     
     # check if needed file exists
     if [ $choice -eq 2 ] || [ $choice -eq 3 ]; then
         if [ ! -f ${target_file} ]; then
-            echo "File: ' ${target_file} ' does not exist!"
-            exit
+            problems+=("File: ' ${target_file} ' does not exist!")
         fi
     fi
+
+    if [ ${#problems[@]} -ne 0 ]; then
+        printf "Some problems occured:\n\n"
+        for eachProblem in "${problems[@]}"; do echo $eachProblem; done
+        exit 
+    else
+        printf "\nOK\n"
+    fi
     
-    printf "\nOK\n"
+    unset problems
 
 }
 
