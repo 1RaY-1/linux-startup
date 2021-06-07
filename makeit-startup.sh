@@ -10,8 +10,8 @@ configure(){
     # default directory for the startup script
     dest_dir_for_target_file="/usr/local/sbin/"
     
-    printf "Enter script filename which you want to run at startup \n"
-    printf "( write full directory or just it's filename if it's located in the same directory where is this program located )\n\n"
+    printf "Enter your script filename which you want to run at startup \n"
+    printf "( write full path or just it's filename if it's located in the same directory where is this program's located )\n\n"
     read target_file
 
     echo "
