@@ -3,10 +3,8 @@
 # you can try making this script startup to check if the program is actually working
 # this script creates a directory named 'ITS-WORKING' on your desktop
 
-username=YOUR_USERNAME_HERE
+mkdir /home/$USER/Desktop/ITS-WORKING
 
-mkdir /home/$username/Desktop/ITS-WORKING
-
-# you can also try:
-# mkdir /home/$USER/Desktop/ITS-WORKING
-# but it did not work for me
+# if not working, then use this:
+#u=YOUR_USERNAME_HERE # <--ENTER YOUR USERNAME
+#mkdir /home/$u/Desktop/ITS-WORKING
