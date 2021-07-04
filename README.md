@@ -26,11 +26,11 @@ sudo bash makeit-startup.sh
 
 Then you simply have to do few things.
 
-1. First of all you  have to enter your bash script's filename, it can be or full path or just a filename, if it's located in the same directory where is this program is located.
+1. First of all you  have to enter your bash script filename, it can be or full path or just the filename ( but only if it's located in the same directory where is this program's located).
 
-2. Then you have to decide if you want your script to be located in other directory or not (the program will ask you).
+2. Then you have to decide if you want your script to be located in other directory or not.
 
-3. And finally decide if you're ok with things which this program will do (the program will ask you).
+3. And finally decide if you're ok with things which this program will do.
 
 # Problems
 You can encounter problems.
