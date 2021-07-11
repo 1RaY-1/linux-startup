@@ -26,18 +26,16 @@ sudo bash makeit-startup.sh
 
 Then you simply have to do few things.
 
-1. First of all you  have to enter your bash script filename, it can be or full path or just the filename ( but only if it's located in the same directory where is this program's located).
+1. First of all you  have to enter your script filename, it can be or full path or just the filename ( but only if it's located in the same directory where is this program is located).
 
 2. Then you have to decide if you want your script to be located in other directory or not.
 
-3. And finally decide if you're ok with things which this program will do.
+3. And finally decide if you're ok with things that this program will do.
 
 # Problems
 You can encounter problems.
 
-To check if you have some problems with this script or not, you can try making script **test.sh** (which is in **test** folder) startup, this script creates on your desktop directory, directory named **ITS-WORKING**
-
-So if you execute script **makeit-startup.sh** and try making **test.sh** startup and, after that, you see that you have a new directory named **ITS-WORKING** on Desktop, then it means that you don't have any problems with this program.
+To check if you have some problems with this script or not, you can try making script **test.sh** (which is in **test** folder) startup, this script creates on your desktop  directory named **ITS-WORKING**
 
 But if you encounter problems, let's see some solutions for some problems.
 
@@ -57,7 +55,7 @@ SELINUX=permissive
 - If you recive an error which is saying that you have a bad **Unit** file, you can edit your service file and try changing:
 **[Unit]** with **[UNIT]** or with **[unit]**
 
-Maybe you can encounter more not understandable errors, but I didn't.
+Maybe you can encounter more problems, but I didn't.
 
 # Note
 If this program is not working for you and you can't understand what's happening, don't try to fix the problems, just make your script startup manually (it's not so difficult).
