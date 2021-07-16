@@ -119,13 +119,7 @@ This program will do this things:
         y | Y ) 
             echo "Ok..."
             ;;
-
-        n | N) 
-            echo "Operation aborted."
-            exit
-            ;;
         *)
-            echo "Operation  aborted."
             exit
             ;;
     esac
