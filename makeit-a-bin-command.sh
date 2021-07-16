@@ -35,8 +35,6 @@ So you will be able to run this program with a single command from any directory
 
         y | yes | Y | YES) echo "Ok";;
 
-        n | N | no | NO) exit;;
-
         *) echo "Invalid choice!";exit;;
     esac
 }
