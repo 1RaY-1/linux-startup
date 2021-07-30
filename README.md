@@ -1,23 +1,23 @@
 # About
-File **makeit-startup.sh** makes other bash programs startup.
+Script [makeit-startup.sh](https://github.com/1RaY-1/bash-startup/blob/main/makeit-startup.sh) makes bash scripts startup.
 
-You can also make it a **bin** command by running **makeit-a-bin-command.sh**, so you will be able to execute it as a command from any directory.
+*You can also make it a **bin** command by running **makeit-a-bin-command.sh**, so you will be able to execute it as a command from any directory.*
 
 Tested on **Linux Mint, Fedora, Parrot OS**
 # How it works
-The main program (makeit-startup.sh) does this things:
+The [main](https://github.com/1RaY-1/bash-startup/blob/main/makeit-startup.sh) script does this things:
 
-1. Locate your startup bash script
-2. Ask you if you want to move your script to other directory
-3. Check if your script and needed directory for your script exists
-4. Move your script to other directory (if you want to)
+1. Locate your bash script (that you wanna be startup)
+2. Ask you if you want to move this script to other directory
+3. Check if everything is ok
+4. Move this script to other directory (if you want to)
 5. Make it executable
 6. Create and edit service file
 7. Reload daemon
 8. Enable and start service file which will execute yout bash script at every startup
 
 # Usage
-Run **main file** with
+Run [makeit-startup.sh](https://github.com/1RaY-1/bash-startup/blob/main/makeit-startup.sh) with
 ```
 sudo bash makeit-startup.sh
 ```
@@ -26,24 +26,24 @@ sudo bash makeit-startup.sh
 
 Then you simply have to do few things.
 
-1. First of all you  have to enter your script filename, it can be or full path or just the filename ( but only if it's located in the same directory where is this program is located).
+1. Enter path to your script that you want to be startup.
 
-2. Then you have to decide if you want your script to be located in other directory or not.
+2. Decide if you want to move this script to other directory or not.
 
-3. And finally decide if you're ok with things that this program will do.
+3. Decide if you are ok with things that this [makeit-startup.sh](https://github.com/1RaY-1/bash-startup/blob/main/makeit-startup.sh) will do.
 
 # Problems
 You can encounter problems.
 
-To check if you have some problems with this script or not, you can try making script **test.sh** (which is in **test** folder) startup, this script creates on your desktop  directory named **ITS-WORKING**
+To check if you have some problems with this script or not, you can try making script [**test.sh**](https://github.com/1RaY-1/bash-startup/blob/main/test/test.sh) startup
 
-But if you encounter problems, let's see some solutions for some problems.
+So if you encounter problems, let's see some solutions for some problems.
 
 - If after executing: 
 ```
 systemctl status YOUR-SERVICE-FILE
 ```
-You recive an error which is saying: **Permissions denied**, you probably need to edit **/etc/selinux/config** and change line:
+You recive an error which is saying something like: **Permissions denied**, then you probably need to edit **/etc/selinux/config** and change line:
 ```
 SELINUX=enforcing 
 ```
@@ -52,15 +52,21 @@ with
 SELINUX=permissive
 ```
 
+*And reboot your system*
+
+
 - If you recive an error which is saying that you have a bad **Unit** file, you can edit your service file and try changing:
 **[Unit]** with **[UNIT]** or with **[unit]**
 
 Maybe you can encounter more problems, but I didn't.
 
 # Note
-If this program is not working for you and you can't understand what's happening, don't try to fix the problems, just make your script startup manually (it's not so difficult).
+If [makeit-startup.sh](https://github.com/1RaY-1/bash-startup/blob/main/makeit-startup.sh) is not working for you and you can't understand what's happening, don't try to fix the problems, just make your script startup manually, here are some useful links that might help you:
 
-But if this program works fine for you, then:
+https://stackoverflow.com/questions/12973777/how-to-run-a-shell-script-at-startup
+
+https://www.youtube.com/watch?v=-aKb-k8B8xo
+
+But if this script works fine for you, then:
 - Don't forget that at any time you can edit, disable or remove your service file.
-- Don't forget that you can modify this program so it will work perfectly for you.
-- Don't forget that you can run **makeit-a-bin-command.sh**, so you'll be able to run this script from any directory.
+- Don't forget that you can modify [makeit-startup.sh](https://github.com/1RaY-1/bash-startup/blob/main/makeit-startup.sh) so it will work perfectly for you.
