@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # you can try making this script startup to check if the program is actually working
 # this script creates a directory named 'ITS-WORKING' on your desktop
