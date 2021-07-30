@@ -1,32 +1,36 @@
 #!/bin/bash
+set -e
 
-# bash program to make any bash scripts run at startup
+# bash script that makes bash scripts run at startup
 
-# it's made of functions, so you can easily modify it
+# colors some things
+green="\e[32m"
+red="\e[31m"
+reset="\e[0m" 
 
 # configure
 configure(){
 
-    # default directory for the startup script
-    dest_dir_for_target_file="/usr/local/sbin/"
+    # I think it is recomended directory for the startup script
+    dest_dir_for_target_file=/usr/local/sbin/
     
-    printf "Enter your script filename which you want to run at startup \n"
-    printf "( write full path or just it's filename if it's located in the same directory where is this program's located )\n\n"
+    printf "Enter your script filename that you want to run at startup\n${red}>>> ${reset}"
     read target_file
 
     echo "
 Do you want to let this script in its current dicrectory or move it to other directory?
 Options:
-1-- Let it in its current dicrectory
+1-- Let it in it's current dicrectory
 2-- Move it to '${dest_dir_for_target_file}'
 3-- Move it to other dicrectory (you choose it)
 "
+    printf "${red}>>>${reset} "
     read choice
     
     temp_target_file=${target_file%.*}.service
     temp_target_file=${temp_target_file##*/}
     target_service_file=${temp_target_file}
-    unset temp_target_file
+    # i had problems when tried to move service file to /etc/systemd/user/ so i use /etc/systemd/system/ instead
     dest_dir_for_target_service_file=/etc/systemd/system/
     
     case $choice in
@@ -39,19 +43,20 @@ Options:
         move_target_file_to_another_dir=0 # false
         ;;
         2)
-        dest_dir_for_target_file="/usr/local/sbin/"
+        dest_dir_for_target_file=/usr/local/sbin/
         move_target_file_to_another_dir=1 # true
         ;;
 
         3)
-        echo "Enter directory where you want your startup script to be located:"
+        echo "Enter directory where you want your startup script to be stored:"
+        printf "\n${red}>>>${reset} "
         read dest_dir_for_target_file
         move_target_file_to_another_dir=1 # true
         ;;
 
         *)
-        echo "Your option is not valid!"
-        exit
+        printf "\n${red}Your option is not valid!\n${reset}"
+        exit 1
         ;;
     esac
 }
@@ -89,21 +94,18 @@ check_if_ok(){
     fi
 
     if [ ${#problems[@]} -ne 0 ]; then
-        printf "Some problems occured:\n\n"
+        printf "\n${red}Some problems occured:${reset}\n\n"
         for eachProblem in "${problems[@]}"; do echo $eachProblem; done
-        exit 
+        exit 1
     else
-        printf "\nOK\n"
+        printf "\n${green}OK${reset}\n"
     fi
-    
-    unset problems
-
 }
 
 # ask user if proceed or no
 ask_if_proceed(){
     echo "
-This program will do this things:
+I will do this things:
 1-- Move ${target_file} to ${dest_dir_for_target_file} 
 2-- Make it executable
 3-- Create and edit ${dest_dir_for_target_service_file}${target_service_file}
@@ -112,16 +114,12 @@ This program will do this things:
 6-- Start service ${target_service_file}
 "
 
-    printf "\nIs this ok? [y/n]\n"
+    printf "\nIs this ok? [y/n]\n${red}>>>${reset} "
     read is_ok
 
     case $is_ok in
-        y | Y ) 
-            echo "Ok..."
-            ;;
-        *)
-            exit
-            ;;
+        y | Y | yes | YES) echo ;;
+        *) exit 0;;
     esac
 }
 
@@ -129,38 +127,49 @@ This program will do this things:
 register_on_startup(){
 
     if [ $move_target_file_to_another_dir -eq 1 ]; then
-        echo "Moving  ${target_file} to ${dest_dir_for_target_file}"
-        sudo mv $target_file $dest_dir_for_target_file
+        printf "Moving  ${target_file} to ${dest_dir_for_target_file} ..."
+        mv $target_file $dest_dir_for_target_file
         target_file=${dest_dir_for_target_file}/${target_file##*/}
+        printf "${green}OK${reset}\n"
         
     fi
     
-    echo "Changing permissions for ${target_file}"
+    printf "Changing permissions for ${target_file} ..."
     sudo chmod +x ${target_file}
     target_file=${target_file##*/}
+    printf "${green}OK${reset}\n"
     
-    # Don't remove underscores, because this program won't write all this config to the service file, anyways you can edit this service file later
+    # Don't remove underscores, because this script won't write all this config to the service file, anyways you can edit this service file later
     config_for_target_service_file="[Unit]\nDescription=Startup_bash_script\n\n[Service]\nExecStart=${dest_dir_for_target_file}/${target_file}\n\n[Install]\nWantedBy=multi-user.target\n"
     
-    echo "Editing ${dest_dir_for_target_service_file}${target_service_file}"
-    sudo printf ${config_for_target_service_file} > ${dest_dir_for_target_service_file}${target_service_file}
+    printf "Editing ${dest_dir_for_target_service_file}${target_service_file} ..."
+    printf ${config_for_target_service_file} > ${dest_dir_for_target_service_file}${target_service_file}
+    printf "${green}OK${reset}\n"
 
-    echo "Reloading daemon..."
-    sudo systemctl daemon-reload
+    printf "Reloading daemon..."
+    systemctl daemon-reload
+    printf "${green}OK${reset}\n"
 
-    echo "Enabling service: ${target_service_file}"
-    sudo systemctl enable ${target_service_file}
+    printf "Enabling service: ${target_service_file} ..."
+    systemctl enable ${target_service_file}
+    printf "${green}OK${reset}\n"
 
-    echo "Starting service: ${target_service_file}"
-    sudo systemctl start ${target_service_file}
+    printf "Starting service: ${target_service_file} ..."
+    systemctl start ${target_service_file}
+    printf "${green}OK${reset}\n"
     
-    printf "\nDone\n"
+    printf "${green}\nDone\n${reset}"
     # print some useful info
-    echo "You can edit ${dest_dir_for_target_service_file}${target_service_file} at any time, or remove it"
-    echo "You can disable ${target_service_file} by executing: sudo systemctl disable ${target_service_file}"
+    echo -e "
+${green}Do ${red}not${reset} forget that:
+${red}*${reset} You can edit ${dest_dir_for_target_service_file}${target_service_file} at any time, or remove it
+${red}*${reset} You can disable ${target_service_file} by typing: sudo systemctl disable ${target_service_file}
+${red}*${reset} You can remove ${target_service_file} by typing: sudo rm ${dest_dir_for_target_service_file}${target_service_file}
+"
 
 }
 
+echo "Before using this script, make sure that SELinux is set to 'permissive' mode"
 configure
 check_if_ok
 ask_if_proceed
