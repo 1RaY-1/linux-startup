@@ -4,7 +4,7 @@ set -e
 # This script copies makeit-startup.sh file to /usr/bin directory, so you'll be able to run it with a single command (but with sudo command) from any directory
 
 needed_file=makeit-startup.sh
-needed_dir=/bin/
+needed_dir=/usr/bin/
 
 check_for_problems(){
 
