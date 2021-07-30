@@ -1,6 +1,7 @@
 #!/bin/bash
+set -e
 
-# This script copies main file to /bin directory, so you'll be able to run the main file with a single command (but with sudo command) from any directory
+# This script copies makeit-startup.sh file to /usr/bin directory, so you'll be able to run it with a single command (but with sudo command) from any directory
 
 needed_file=makeit-startup.sh
 needed_dir=/bin/
@@ -10,12 +11,12 @@ check_for_problems(){
 # check if script is running as root
     if [ $EUID -ne 0 ]; then
         echo "Please run me as root"
-        exit
+        exit 1
     fi
 
     if [ ! -f ${needed_file} ]; then
 	echo "File ${needed_file} does not exist!"
-        exit
+        exit 1
     fi
 }
 
@@ -40,8 +41,7 @@ So you will be able to run this program with a single command from any directory
 }
 
 do_it(){
-    sudo cp ${needed_file} ${needed_dir}${needed_file%.*}
-
+    cp ${needed_file} ${needed_dir}${needed_file%.*}
     chmod +x ${needed_dir}${needed_file%.*}
 
     echo "Done"
