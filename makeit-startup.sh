@@ -63,7 +63,7 @@ Options:
 
 # check if everything is ok
 check_if_ok(){
-    printf "Checking some things...\n"
+    printf "Checking some things..."
 
     problems=()
     
@@ -94,11 +94,11 @@ check_if_ok(){
     fi
 
     if [ ${#problems[@]} -ne 0 ]; then
-        printf "\n${red}Some problems occured:${reset}\n\n"
-        for eachProblem in "${problems[@]}"; do echo $eachProblem; done
+        printf "\n${red}Some problems occurred:${reset}\n\n"
+        for eachProblem in "${problems[@]}"; do echo -e "${red}*${reset} $eachProblem"; done
         exit 1
     else
-        printf "\n${green}OK${reset}\n"
+        printf "${green}OK${reset}\n"
     fi
 }
 
@@ -169,7 +169,7 @@ ${red}*${reset} You can remove ${target_service_file} by typing: sudo rm ${dest_
 
 }
 
-echo "Before using this script, make sure that SELinux is set to 'permissive' mode"
+echo "Before using this script, make sure that SELinux is set to permissive mode"
 configure
 check_if_ok
 ask_if_proceed
