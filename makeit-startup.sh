@@ -1,7 +1,8 @@
 #!/bin/bash
 set -e
 
-# bash script that makes bash scripts run at startup
+# bash script that makes other scripts run at startup on Linux, but your startup scripts have to have a shebang!
+# if you encounter some problems with this script, try to see https://github.com/1RaY-1/linux-startup/blob/main/README.md#problems
 
 # colors some things
 green="\e[32m"
@@ -10,10 +11,6 @@ reset="\e[0m"
 
 # configure
 configure(){
-
-    # I think it is recomended directory for the startup script
-    dest_dir_for_target_file=/usr/local/sbin/
-    
     printf "Enter your script filename that you want to run at startup\n${red}>>> ${reset}"
     read target_file
 
@@ -21,8 +18,9 @@ configure(){
 Do you want to let this script in its current dicrectory or move it to other directory?
 Options:
 1-- Let it in it's current dicrectory
-2-- Move it to '${dest_dir_for_target_file}'
-3-- Move it to other dicrectory (you choose it)
+2-- Move it to '/usr/local/sbin/'
+3-- Move it to '/lib/systemd/system-sleep/'
+4-- Move it to other dicrectory
 "
     printf "${red}>>>${reset} "
     read choice
@@ -30,7 +28,7 @@ Options:
     temp_target_file=${target_file%.*}.service
     temp_target_file=${temp_target_file##*/}
     target_service_file=${temp_target_file}
-    # i had problems when tried to move service file to /etc/systemd/user/ so i use /etc/systemd/system/ instead
+    # i had problems when tried to move service files to /etc/systemd/user/ so i use /etc/systemd/system/ directory instead
     dest_dir_for_target_service_file=/etc/systemd/system/
     
     case $choice in
@@ -48,6 +46,11 @@ Options:
         ;;
 
         3)
+        dest_dir_for_target_file=/lib/systemd/system-sleep/
+        move_target_file_to_another_dir=1 # true
+        ;;
+
+        4)
         echo "Enter directory where you want your startup script to be stored:"
         printf "\n${red}>>>${reset} "
         read dest_dir_for_target_file
@@ -72,13 +75,6 @@ check_if_ok(){
         problems+=("Please run me as root")
     fi
 
-    # check if needed file exists (In our dir)
-    if [ $choice -eq 1 ]; then
-        if [ ! -f "$target_file" ]; then
-            problems+=("File: ' ${target_file} ' does not exist!")
-        fi
-    fi
-    
     # check if needed directory exists
     if [ $move_target_file_to_another_dir -eq 1 ]; then
         if [ ! -d $dest_dir_for_target_file ]; then
@@ -87,10 +83,8 @@ check_if_ok(){
     fi
     
     # check if needed file exists
-    if [ $choice -eq 2 ] || [ $choice -eq 3 ]; then
-        if [ ! -f ${target_file} ]; then
-            problems+=("File: ' ${target_file} ' does not exist!")
-        fi
+    if [ ! -f ${target_file} ]; then
+        problems+=("File: ' ${target_file} ' does not exist!")
     fi
 
     if [ ${#problems[@]} -ne 0 ]; then
@@ -125,7 +119,6 @@ I will do this things:
 
 # main function to make script run at startup
 register_on_startup(){
-
     if [ $move_target_file_to_another_dir -eq 1 ]; then
         printf "Moving  ${target_file} to ${dest_dir_for_target_file} ..."
         mv $target_file $dest_dir_for_target_file
@@ -140,7 +133,7 @@ register_on_startup(){
     printf "${green}OK${reset}\n"
     
     # Don't remove underscores, because this script won't write all this config to the service file, anyways you can edit this service file later
-    config_for_target_service_file="[Unit]\nDescription=Startup_bash_script\n\n[Service]\nExecStart=${dest_dir_for_target_file}/${target_file}\n\n[Install]\nWantedBy=multi-user.target\n"
+    config_for_target_service_file="[Unit]\nDescription=Startup_script\n\n[Service]\nExecStart=${dest_dir_for_target_file}/${target_file}\n\n[Install]\nWantedBy=multi-user.target\n"
     
     printf "Editing ${dest_dir_for_target_service_file}${target_service_file} ..."
     printf ${config_for_target_service_file} > ${dest_dir_for_target_service_file}${target_service_file}
