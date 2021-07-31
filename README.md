@@ -39,7 +39,7 @@ To check if you have some problems with this script or not, you can try making s
 
 So if you encounter problems, let's see some solutions for some problems.
 
-- If after executing: 
+- If after typing: 
 ```
 systemctl status YOUR-SERVICE-FILE
 ```
