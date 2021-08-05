@@ -1,10 +1,9 @@
 #!/bin/bash
 set -e
 
-# bash script that makes other scripts run at startup on Linux, but your startup scripts have to have a shebang!
-# if you encounter some problems with this script, try to see https://github.com/1RaY-1/linux-startup/blob/main/README.md#problems
+# if you encounter some problems with this script, see https://github.com/1RaY-1/linux-startup/blob/main/README.md#problems
 
-# colors some things
+# colors
 green="\e[32m"
 red="\e[31m"
 reset="\e[0m" 
@@ -15,7 +14,7 @@ configure(){
     read target_file
 
     echo "
-Do you want to let this script in its current dicrectory or move it to other directory?
+Do you want to let this script in it's current dicrectory or move it to other directory?
 Options:
 1-- Let it in it's current dicrectory
 2-- Move it to '/usr/local/sbin/'
@@ -28,7 +27,7 @@ Options:
     temp_target_file=${target_file%.*}.service
     temp_target_file=${temp_target_file##*/}
     target_service_file=${temp_target_file}
-    # i had problems when tried to move service files to /etc/systemd/user/ so i use /etc/systemd/system/ directory instead
+    # i had problems when tried to move service files to '/etc/systemd/user/' so i use '/etc/systemd/system/' directory instead
     dest_dir_for_target_service_file=/etc/systemd/system/
     
     case $choice in
@@ -47,14 +46,14 @@ Options:
 
         3)
         dest_dir_for_target_file=/lib/systemd/system-sleep/
-        move_target_file_to_another_dir=1 # true
+        move_target_file_to_another_dir=1
         ;;
 
         4)
         echo "Enter directory where you want your startup script to be stored:"
         printf "\n${red}>>>${reset} "
         read dest_dir_for_target_file
-        move_target_file_to_another_dir=1 # true
+        move_target_file_to_another_dir=1
         ;;
 
         *)
@@ -117,7 +116,7 @@ I will do this things:
     esac
 }
 
-# main function to make script run at startup
+# main function
 register_on_startup(){
     if [ $move_target_file_to_another_dir -eq 1 ]; then
         printf "Moving  ${target_file} to ${dest_dir_for_target_file} ..."
@@ -132,7 +131,7 @@ register_on_startup(){
     target_file=${target_file##*/}
     printf "${green}OK${reset}\n"
     
-    # Don't remove underscores, because this script won't write all this config to the service file, anyways you can edit this service file later
+    # Do not remove underscores
     config_for_target_service_file="[Unit]\nDescription=Startup_script\n\n[Service]\nExecStart=${dest_dir_for_target_file}/${target_file}\n\n[Install]\nWantedBy=multi-user.target\n"
     
     printf "Editing ${dest_dir_for_target_service_file}${target_service_file} ..."
@@ -155,11 +154,10 @@ register_on_startup(){
     # print some useful info
     echo -e "
 ${green}Do ${red}not${reset} forget that:
-${red}*${reset} You can edit ${dest_dir_for_target_service_file}${target_service_file} at any time, or remove it
+${red}*${reset} You can edit ${dest_dir_for_target_service_file}${target_service_file} at any time, or remove it.
 ${red}*${reset} You can disable ${target_service_file} by typing: sudo systemctl disable ${target_service_file}
 ${red}*${reset} You can remove ${target_service_file} by typing: sudo rm ${dest_dir_for_target_service_file}${target_service_file}
 "
-
 }
 
 echo "Before using this script, make sure that SELinux is set to permissive mode"
