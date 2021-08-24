@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-# if you encounter some problems with this script, see https://github.com/1RaY-1/linux-startup/blob/main/README.md#problems
+# if you encounter some problems with this script, read https://github.com/1RaY-1/linux-startup/blob/main/README.md#problems
 
 # colors
 green="\e[32m"
@@ -116,7 +116,7 @@ I will do this things:
     esac
 }
 
-# main function
+# make script startup
 register_on_startup(){
     if [ $move_target_file_to_another_dir -eq 1 ]; then
         printf "Moving  ${target_file} to ${dest_dir_for_target_file} ..."
@@ -160,8 +160,12 @@ ${red}*${reset} You can remove ${target_service_file} by typing: sudo rm ${dest_
 "
 }
 
-echo "Before using this script, make sure that SELinux is set to permissive mode"
-configure
-check_if_ok
-ask_if_proceed
-register_on_startup
+main(){
+    echo -e "If you have some problems with this script, read https://github.com/1RaY-1/linux-startup/blob/main/README.md#problems\n"
+    configure
+    check_if_ok
+    ask_if_proceed
+    register_on_startup
+}
+
+main
