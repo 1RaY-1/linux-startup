@@ -3,7 +3,7 @@
 
 **Do not forget to add a shebang on your script that you wanna make startup!**
 
-*You can also make it a **bin** command by running **makeit-a-bin-command.sh**, so you will be able to execute it as a command from any directory.*
+*You can also make it a bin command by running makeit-a-bin-command.sh, so you will be able to execute it as a command from any directory.*
 
 Tested on **Linux Mint, Fedora, Parrot OS**
 # How it works
@@ -37,7 +37,7 @@ Then you simply have to do few things.
 # Problems
 You can encounter problems.
 
-To check if you have some problems with this script or not, you can try making script [**test.sh**](https://github.com/1RaY-1/bash-startup/blob/main/test/test.sh) startup
+To check if you have some problems with this script or not, you can try making script [test.py](https://github.com/1RaY-1/linux-startup/blob/main/test/test.py) or [test.sh](https://github.com/1RaY-1/bash-startup/blob/main/test/test.sh) startup
 
 So if you encounter problems, let's see some solutions for some problems.
 
