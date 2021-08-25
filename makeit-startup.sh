@@ -10,7 +10,7 @@ reset="\e[0m"
 
 # configure
 configure(){
-    printf "Enter your script filename that you want to run at startup\n${red}>>> ${reset}"
+    printf "Enter your script filename that you want to make startup\n${red}>>> ${reset}"
     read target_file
 
     echo "
