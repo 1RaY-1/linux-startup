@@ -63,7 +63,6 @@ Options:
     esac
 }
 
-# check if everything is ok
 check_if_ok(){
     printf "Checking some things..."
 
@@ -104,7 +103,6 @@ I will do this things:
 3-- Create and edit ${dest_dir_for_target_service_file}${target_service_file}
 4-- Reload daemon
 5-- Enable service ${target_service_file}
-6-- Start service ${target_service_file}
 "
 
     printf "\nIs this ok? [y/n]\n${red}>>>${reset} "
@@ -146,15 +144,11 @@ register_on_startup(){
     systemctl enable ${target_service_file}
     printf "${green}OK${reset}\n"
 
-    printf "Starting service: ${target_service_file} ..."
-    systemctl start ${target_service_file}
-    printf "${green}OK${reset}\n"
-    
     printf "${green}\nDone\n${reset}"
     # print some useful info
     echo -e "
 ${green}Do ${red}not${reset} forget that:
-${red}*${reset} You can edit ${dest_dir_for_target_service_file}${target_service_file} at any time, or remove it.
+${red}*${reset} You can edit ${dest_dir_for_target_service_file}${target_service_file} at any time.
 ${red}*${reset} You can disable ${target_service_file} by typing: sudo systemctl disable ${target_service_file}
 ${red}*${reset} You can remove ${target_service_file} by typing: sudo rm ${dest_dir_for_target_service_file}${target_service_file}
 "
@@ -169,3 +163,4 @@ main(){
 }
 
 main
+exit
