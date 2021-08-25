@@ -9,14 +9,14 @@ Tested on **Linux Mint, Fedora, Parrot OS**
 # How it works
 The [main](https://github.com/1RaY-1/bash-startup/blob/main/makeit-startup.sh) script does this things:
 
-1. Locate your bash script (that you wanna be startup)
+1. Locate your needed script (that you wanna be startup)
 2. Ask you if you want to move this script to other directory
 3. Check if everything is ok
 4. Move this script to other directory (if you want to)
 5. Make it executable
 6. Create and edit service file
 7. Reload daemon
-8. Enable and start service file which will execute yout bash script at every startup
+8. Enable service file that will execute your script at startup
 
 # Usage
 Run [makeit-startup.sh](https://github.com/1RaY-1/bash-startup/blob/main/makeit-startup.sh) with
