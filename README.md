@@ -34,6 +34,8 @@ Then you simply have to do few things.
 
 3. Decide if you are ok with things that this [makeit-startup.sh](https://github.com/1RaY-1/bash-startup/blob/main/makeit-startup.sh) will do.
 
+You can see [example video](https://github.com/1RaY-1/linux-startup/blob/main/example.mp4), where I made a shell script startup using makeit-startup.sh
+
 # Problems
 You can encounter problems.
 
