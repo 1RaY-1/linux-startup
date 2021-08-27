@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-# if you encounter some problems with this script, read https://github.com/1RaY-1/linux-startup/blob/main/README.md#problems
+# if you encounter some problems with this script, see https://github.com/1RaY-1/linux-startup/blob/main/README.md#problems
 
 # colors
 green="\e[32m"
