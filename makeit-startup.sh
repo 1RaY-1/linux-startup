@@ -155,7 +155,7 @@ ${red}*${reset} You can remove ${target_service_file} by typing: sudo rm ${dest_
 }
 
 main(){
-    echo -e "If you have some problems with this script, read https://github.com/1RaY-1/linux-startup/blob/main/README.md#problems\n"
+    echo -e "If you encounter some problems with this script, see 'https://github.com/1RaY-1/linux-startup/blob/main/README.md#problems'\n"
     configure
     check_if_ok
     ask_if_proceed
