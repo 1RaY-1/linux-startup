@@ -1,7 +1,13 @@
-#!/bin/bash
-set -e
+#!/usr/bin/env bash
 
-# if you encounter some problems with this script, see https://github.com/1RaY-1/linux-startup/blob/main/README.md#problems
+# Author: 1RaY-1 (https://github.com/1RaY-1)
+# LICENSE: MIT
+# Description:
+#   Script to make other scripts startup on Linux .
+#   if you encounter any problems with this script, see https://github.com/1RaY-1/linux-startup/blob/main/README.md#problems
+
+# exit on any error
+set -e
 
 # colors
 green="\e[32m"
@@ -163,4 +169,4 @@ main(){
 }
 
 main
-exit
+exit 0
