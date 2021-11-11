@@ -3,7 +3,7 @@
 
 **Do not forget to add a shebang on your script that you wanna make startup!**
 
-*You can also make it a bin command by running makeit-a-bin-command.sh, so you will be able to execute it as a command from any directory.*
+*You can also install it by running install.sh, so you will be able to execute [it](https://github.com/1RaY-1/bash-startup/blob/main/makeit-startup.sh) as a command from any directory.*
 
 Tested on **Linux Mint, Fedora, Parrot OS**
 # How it works

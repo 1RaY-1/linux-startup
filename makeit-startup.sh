@@ -10,9 +10,9 @@
 set -e
 
 # colors
-green="\e[32m"
-red="\e[31m"
-reset="\e[0m" 
+readonly green="\e[32m"
+readonly red="\e[31m"
+readonly reset="\e[0m" 
 
 # configure
 configure(){
@@ -67,6 +67,7 @@ Options:
         exit 1
         ;;
     esac
+    unset choice
 }
 
 check_if_ok(){
@@ -82,13 +83,13 @@ check_if_ok(){
     # check if needed directory exists
     if [ $move_target_file_to_another_dir -eq 1 ]; then
         if [ ! -d $dest_dir_for_target_file ]; then
-            problems+=("Directory: ' ${dest_dir_for_target_file} ' does not exist!")
+            problems+=("Directory: '${dest_dir_for_target_file}' does not exist!")
         fi
     fi
     
     # check if needed file exists
     if [ ! -f ${target_file} ]; then
-        problems+=("File: ' ${target_file} ' does not exist!")
+        problems+=("File: '${target_file}' does not exist!")
     fi
 
     if [ ${#problems[@]} -ne 0 ]; then
@@ -98,6 +99,7 @@ check_if_ok(){
     else
         printf "${green}OK${reset}\n"
     fi
+    unset problems
 }
 
 # ask user if proceed or no
@@ -118,6 +120,7 @@ I will do this things:
         y | Y | yes | YES) echo ;;
         *) exit 0;;
     esac
+    unset is_ok 
 }
 
 # make script startup
@@ -150,9 +153,10 @@ register_on_startup(){
     systemctl enable ${target_service_file}
     printf "${green}OK${reset}\n"
 
-    printf "${green}\nDone\n${reset}"
     # print some useful info
     echo -e "
+${green}Done${reset}
+
 ${green}Do ${red}not${reset} forget that:
 ${red}*${reset} You can edit ${dest_dir_for_target_service_file}${target_service_file} at any time.
 ${red}*${reset} You can disable ${target_service_file} by typing: sudo systemctl disable ${target_service_file}
