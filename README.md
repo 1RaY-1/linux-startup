@@ -1,13 +1,12 @@
 # About
-[makeit-startup.sh](https://github.com/1RaY-1/bash-startup/blob/main/makeit-startup.sh) makes scripts startup on Linux.
+A program to easily make any script startup on Linux, so at every boot a needed script executes automatically.
 
-**Do not forget to add a shebang on your script that you wanna make startup!**
+Tested on **Linux Mint, Fedora, Parrot OS, Kali Linux**
 
-*You can also install it by running install.sh, so you will be able to execute [it](https://github.com/1RaY-1/bash-startup/blob/main/makeit-startup.sh) as a command from any directory.*
+-----------------------------------------------------------------------
 
-Tested on **Linux Mint, Fedora, Parrot OS**
-# How it works
-The [main](https://github.com/1RaY-1/bash-startup/blob/main/makeit-startup.sh) script does this things:
+# How it works ?
+[It](https://github.com/1RaY-1/bash-startup/blob/main/makeit-startup.sh) does this things:
 
 1. Locate your needed script (that you wanna be startup)
 2. Ask you if you want to move this script to other directory
@@ -18,30 +17,50 @@ The [main](https://github.com/1RaY-1/bash-startup/blob/main/makeit-startup.sh) s
 7. Reload daemon
 8. Enable service file that will execute your script at startup
 
+-----------------------------------------------------------------------
+
+# How to install ?
+Type the following commands in your terminal
+* `git clone https://github.com/1RaY-1/linux-startup`
+* `cd linux-startup`
+
+And run it
+* `sudo bash makeit-startup.sh`
+
+Or install it and then run
+
+* `sudo bash install.sh`
+* `sudo makeit-startup.sh`
+
+-----------------------------------------------------------------------
+
 # Usage
-Run [makeit-startup.sh](https://github.com/1RaY-1/bash-startup/blob/main/makeit-startup.sh) with
+If you just downloaded this program.
 ```
 sudo bash makeit-startup.sh
 ```
-
-**Dont't forget to run it with `sudo` command.**
-
+If you installed it.
+```
+sudo makeit-startup.sh
+```
 Then you simply have to do few things.
 
-1. Enter path to your script that you want to be startup.
+1. Enter full path to the script that you wanna make startup.
 
-2. Decide if you want to move this script to other directory or not.
+2. Decide if you want to move it to other directory or not.
 
-3. Decide if you are ok with things that this [makeit-startup.sh](https://github.com/1RaY-1/bash-startup/blob/main/makeit-startup.sh) will do.
+3. Agree to continue.
 
-You can watch [example video](https://github.com/1RaY-1/linux-startup/blob/main/example.mp4), where I made a shell script startup using makeit-startup.sh
+You can watch [example video](https://github.com/1RaY-1/linux-startup/blob/main/example.mp4), to see that it's very easy to use it.
+
+-----------------------------------------------------------------------
 
 # Problems
 You can encounter problems.
 
 To check if you have some problems with this script or not, you can try making script [test.py](https://github.com/1RaY-1/linux-startup/blob/main/test/test.py) or [test.sh](https://github.com/1RaY-1/bash-startup/blob/main/test/test.sh) startup
 
-So if you encounter problems, let's see some solutions for some problems.
+So
 
 - If after typing: 
 ```
@@ -58,19 +77,15 @@ SELINUX=permissive
 
 *And reboot your system*
 
-
 - If you recive an error which is saying that you have a bad **Unit** file, you can edit your service file and try changing:
 **[Unit]** with **[UNIT]** or with **[unit]**
 
-Maybe you can encounter more problems, but I didn't.
+If you encounter more problems, please tell me by creating an [issue](https://github.com/1RaY-1/linux-startup/issues).
 
-# Note
-If [makeit-startup.sh](https://github.com/1RaY-1/bash-startup/blob/main/makeit-startup.sh) is not working for you and you can't understand what's happening, don't try to fix the problems, just make your script startup manually, here are some useful links that might help you:
+-----------------------------------------------------------------------
 
+# Note few things
+* Before making any script startup, make sure it has a [shebang](https://en.wikipedia.org/wiki/Shebang_(Unix))
+* If you wanna understand how to manually make any script startup, here's some link that should help you.
 https://stackoverflow.com/questions/12973777/how-to-run-a-shell-script-at-startup
-
 https://www.youtube.com/watch?v=-aKb-k8B8xo
-
-But if this script works fine for you, then:
-- Don't forget that at any time you can edit, disable or remove your service file.
-- Don't forget that you can modify [makeit-startup.sh](https://github.com/1RaY-1/bash-startup/blob/main/makeit-startup.sh) so it will work perfectly for you.
