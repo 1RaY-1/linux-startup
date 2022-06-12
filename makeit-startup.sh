@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
 # Author: 1RaY-1 (https://github.com/1RaY-1)
-# LICENSE: MIT
+# LICENSE: MIT (see LICENSE file)
+# Version: 1.0
 # Description:
-#   Script to make other scripts startup on Linux .
-#   if you encounter any problems with this script, see https://github.com/1RaY-1/linux-startup/blob/main/README.md#problems
+#   A program to make scripts startup on Linux in few clicks (so at every boot a needed script executes automatically).
+#   if you encounter problems, see https://github.com/1RaY-1/linux-startup/blob/main/README.md#problems
 
 # exit on any error
 set -e
@@ -72,6 +73,7 @@ Options:
 
 check_if_ok(){
     printf "Checking some things..."
+    sleep 0.8
 
     problems=()
     
@@ -133,7 +135,7 @@ register_on_startup(){
         
     fi
     
-    printf "Changing permissions for ${target_file} ..."
+    printf "Changing permissions for ${target_file} ...";sleep 0.8
     sudo chmod +x ${target_file}
     target_file=${target_file##*/}
     printf "${green}OK${reset}\n"
@@ -141,22 +143,21 @@ register_on_startup(){
     # Do not remove underscores
     config_for_target_service_file="[Unit]\nDescription=Startup_script\n\n[Service]\nExecStart=${dest_dir_for_target_file}/${target_file}\n\n[Install]\nWantedBy=multi-user.target\n"
     
-    printf "Editing ${dest_dir_for_target_service_file}${target_service_file} ..."
+    printf "Editing ${dest_dir_for_target_service_file}${target_service_file} ...";sleep 0.8
     printf ${config_for_target_service_file} > ${dest_dir_for_target_service_file}${target_service_file}
     printf "${green}OK${reset}\n"
 
-    printf "Reloading daemon..."
+    printf "Reloading daemon...";sleep 0.8
     systemctl daemon-reload
     printf "${green}OK${reset}\n"
 
-    printf "Enabling service: ${target_service_file} ..."
+    printf "Enabling service: ${target_service_file} ...";sleep 0.8
     systemctl enable ${target_service_file}
     printf "${green}OK${reset}\n"
 
     # print some useful info
     echo -e "
 ${green}Done${reset}
-
 ${green}Do ${red}not${reset} forget that:
 ${red}*${reset} You can edit ${dest_dir_for_target_service_file}${target_service_file} at any time.
 ${red}*${reset} You can disable ${target_service_file} by typing: sudo systemctl disable ${target_service_file}
@@ -165,7 +166,7 @@ ${red}*${reset} You can remove ${target_service_file} by typing: sudo rm ${dest_
 }
 
 main(){
-    echo -e "If you encounter some problems with this script, see 'https://github.com/1RaY-1/linux-startup/blob/main/README.md#problems'\n"
+    echo -e "If you face problems with this program, see 'https://github.com/1RaY-1/linux-startup/blob/main/README.md#problems'\n"
     configure
     check_if_ok
     ask_if_proceed
