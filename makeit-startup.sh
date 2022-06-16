@@ -128,7 +128,7 @@ I will do this things:
 # make script startup
 register_on_startup(){
     if [ $move_target_file_to_another_dir -eq 1 ]; then
-        printf "Moving  ${target_file} to ${dest_dir_for_target_file} ..."
+        printf "Moving  ${target_file} to ${dest_dir_for_target_file} ...";sleep 0.8
         mv $target_file $dest_dir_for_target_file
         target_file=${dest_dir_for_target_file}/${target_file##*/}
         printf "${green}OK${reset}\n"
