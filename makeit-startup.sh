@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Author: 1RaY-1 (https://github.com/1RaY-1)
+# Author: Ray (https://github.com/1RaY-1)
 # LICENSE: MIT (see LICENSE file)
 # Version: 1.0
 # Description:
