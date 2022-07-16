@@ -30,7 +30,7 @@ And run it
 Or install it and then run
 
 * `sudo bash install.sh`
-* `sudo makeit-startup.sh`
+* `sudo makeit-startup`
 
 -----------------------------------------------------------------------
 
@@ -41,7 +41,7 @@ sudo bash makeit-startup.sh
 ```
 If you installed it.
 ```
-sudo makeit-startup.sh
+sudo makeit-startup
 ```
 Then you simply have to do few things.
 
