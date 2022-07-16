@@ -92,6 +92,11 @@ check_if_ok(){
     # check if needed file exists
     if [ ! -f ${target_file} ]; then
         problems+=("File: '${target_file}' does not exist!")
+    else
+        # check if needed files contains shebang
+        read -r firstline<${target_file}
+        [[ ! $firstline == "#"* ]] && problems+=("Please add a shebang to '${target_file}'! If don't know what is a shebang, see: https://en.wikipedia.org/wiki/Shebang_(Unix)")
+        unset firstline
     fi
 
     if [ ${#problems[@]} -ne 0 ]; then
