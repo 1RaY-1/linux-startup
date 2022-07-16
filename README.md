@@ -1,7 +1,7 @@
 # About
 A program to easily make any script startup on Linux, so at every boot a needed script executes automatically.
 
-Tested on **Linux Mint, Fedora, Parrot OS, Kali Linux**
+Tested on **Linux Mint, Fedora, Parrot OS, Kali Linux, Arch Linux**
 
 -----------------------------------------------------------------------
 
