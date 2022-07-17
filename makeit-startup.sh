@@ -2,9 +2,10 @@
 
 # Author: Ray (https://github.com/1RaY-1)
 # LICENSE: MIT (see LICENSE file)
-# Version: 1.0
+# Version: 1.1
 # Description:
 #   A program to make scripts startup on Linux in few clicks (so at every boot a needed script executes automatically).
+#   It can be bash, python or any other interpreted scripts
 #   if you encounter problems, see https://github.com/1RaY-1/linux-startup/blob/main/README.md#problems
 
 # exit on any error
@@ -17,16 +18,16 @@ readonly reset="\e[0m"
 
 # configure
 configure(){
-    printf "Enter your script filename that you want to make startup\n${red}>>> ${reset}"
+    printf "Enter full path to your script that you wanna make startup\n${red}>>> ${reset}"
     read target_file
 
     echo "
-Do you want to let this script in it's current dicrectory or move it to other directory?
+Do you wanna move this script other directory?
 Options:
-1-- Let it in it's current dicrectory
+1-- Don't move it
 2-- Move it to '/usr/local/sbin/'
 3-- Move it to '/lib/systemd/system-sleep/'
-4-- Move it to other dicrectory
+4-- Move it to other dicrectory (you choose)
 "
     printf "${red}>>>${reset} "
     read choice
@@ -34,7 +35,7 @@ Options:
     temp_target_file=${target_file%.*}.service
     temp_target_file=${temp_target_file##*/}
     target_service_file=${temp_target_file}
-    # i had problems when tried to move service files to '/etc/systemd/user/' so i use '/etc/systemd/system/' directory instead
+    # i had problems when tried to move service files to '/etc/systemd/user/' so i better use '/etc/systemd/system/' instead
     dest_dir_for_target_service_file=/etc/systemd/system/
     
     case $choice in
@@ -77,7 +78,7 @@ check_if_ok(){
 
     problems=()
     
-    # check if script is running as root
+    # check if running as root
     if [ $EUID -ne 0 ]; then
         problems+=("Please run me as root")
     fi
@@ -95,7 +96,7 @@ check_if_ok(){
     else
         # check if needed files contains shebang
         read -r firstline<${target_file}
-        [[ ! $firstline == "#"* ]] && problems+=("Please add a shebang to '${target_file}'! If don't know what is a shebang, see: https://en.wikipedia.org/wiki/Shebang_(Unix)")
+        [[ ! $firstline == "#!"* ]] && problems+=("Please add a shebang to '${target_file}'! If don't know what is a shebang, see: https://en.wikipedia.org/wiki/Shebang_(Unix)")
         unset firstline
     fi
 
@@ -113,18 +114,17 @@ check_if_ok(){
 ask_if_proceed(){
     echo "
 I will do this things:
-1-- Move ${target_file} to ${dest_dir_for_target_file} 
-2-- Make it executable
-3-- Create and edit ${dest_dir_for_target_service_file}${target_service_file}
-4-- Reload daemon
-5-- Enable service ${target_service_file}
-"
+$([ $move_target_file_to_another_dir -eq 1 ] && echo "* Move $target_file to $dest_dir_for_target_file" || :) 
+* Make ${target_file##*/} executable
+* Create and edit ${dest_dir_for_target_service_file}${target_service_file}
+* Reload daemon
+* Enable service ${target_service_file}"
 
     printf "\nIs this ok? [y/n]\n${red}>>>${reset} "
     read is_ok
 
     case $is_ok in
-        y | Y | yes | YES) echo ;;
+        y | Y | yes | YES) : ;;
         *) exit 0;;
     esac
     unset is_ok 
@@ -163,6 +163,8 @@ register_on_startup(){
     # print some useful info
     echo -e "
 ${green}Done${reset}
+From now your script will execute at every boot.
+
 ${green}Do ${red}not${reset} forget that:
 ${red}*${reset} You can edit ${dest_dir_for_target_service_file}${target_service_file} at any time.
 ${red}*${reset} You can disable ${target_service_file} by typing: sudo systemctl disable ${target_service_file}
@@ -171,7 +173,6 @@ ${red}*${reset} You can remove ${target_service_file} by typing: sudo rm ${dest_
 }
 
 main(){
-    echo -e "If you face problems with this program, see 'https://github.com/1RaY-1/linux-startup/blob/main/README.md#problems'\n"
     configure
     check_if_ok
     ask_if_proceed
@@ -179,4 +180,3 @@ main(){
 }
 
 main
-exit 0
