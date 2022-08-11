@@ -1,7 +1,15 @@
 # About
 A program to easily make any script startup on Linux, so at every boot a needed script executes automatically.
 
-Tested on **Linux Mint, Fedora, Parrot OS, Kali Linux, Arch Linux**
+<details>
+  <summary><h3>Tested on</h3></summary>
+
+- **Linux Mint**
+- **Fedora**
+- **Parrot OS**
+- **Kali Linux**
+- **Arch Linux**
+</details>
 
 -----------------------------------------------------------------------
 
@@ -86,6 +94,8 @@ If you encounter more problems, please tell me by creating an [issue](https://gi
 
 # Note few things
 * Before making any script startup, make sure it has a [shebang](https://en.wikipedia.org/wiki/Shebang_(Unix))
-* If you wanna understand how to manually make any script startup, here's some link that should help you.
+* If you wanna understand how to manually make any script startup, here some links that should help you.
+
 https://stackoverflow.com/questions/12973777/how-to-run-a-shell-script-at-startup
+
 https://www.youtube.com/watch?v=-aKb-k8B8xo
