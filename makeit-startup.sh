@@ -5,8 +5,11 @@
 # Version: 1.1
 # Description:
 #   A program to make scripts startup on Linux in few clicks (so at every boot a needed script executes automatically).
-#   It can be bash, python or any other interpreted scripts
+#   It can be bash, python, or any other interpreted scripts.
 #   if you encounter problems, see https://github.com/1RaY-1/linux-startup/blob/main/README.md#problems
+
+# Tested on: Linux Mint, Fedora, Parrot OS, Kali Linux, Arch Linux
+
 
 # exit on any error
 set -e
@@ -24,7 +27,7 @@ configure(){
     echo "
 Do you wanna move this script other directory?
 Options:
-1-- Don't move it
+1-- No
 2-- Move it to '/usr/local/sbin/'
 3-- Move it to '/lib/systemd/system-sleep/'
 4-- Move it to other dicrectory (you choose)
@@ -35,7 +38,7 @@ Options:
     temp_target_file=${target_file%.*}.service
     temp_target_file=${temp_target_file##*/}
     target_service_file=${temp_target_file}
-    # i had problems when tried to move service files to '/etc/systemd/user/' so i better use '/etc/systemd/system/' instead
+    # i had problems when tried to move service files to '/etc/systemd/user/' so i use '/etc/systemd/system/' instead
     dest_dir_for_target_service_file=/etc/systemd/system/
     
     case $choice in
@@ -58,7 +61,7 @@ Options:
         ;;
 
         4)
-        echo "Enter directory where you want your startup script to be stored:"
+        echo "Enter a directory: "
         printf "\n${red}>>>${reset} "
         read dest_dir_for_target_file
         move_target_file_to_another_dir=1
@@ -113,14 +116,14 @@ check_if_ok(){
 # ask user if proceed or no
 ask_if_proceed(){
     echo "
-I will do this things:
+Will do this things:
 $([ $move_target_file_to_another_dir -eq 1 ] && echo "* Move $target_file to $dest_dir_for_target_file" || :) 
 * Make ${target_file##*/} executable
 * Create and edit ${dest_dir_for_target_service_file}${target_service_file}
 * Reload daemon
 * Enable service ${target_service_file}"
 
-    printf "\nIs this ok? [y/n]\n${red}>>>${reset} "
+    printf "\Proceed? [y/n]\n${red}>>>${reset} "
     read is_ok
 
     case $is_ok in
