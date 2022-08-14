@@ -118,12 +118,12 @@ ask_if_proceed(){
     echo "
 Will do this things:
 $([ $move_target_file_to_another_dir -eq 1 ] && echo "* Move $target_file to $dest_dir_for_target_file" || :) 
-* Make ${target_file##*/} executable
+* Make '${target_file##*/}' executable
 * Create and edit ${dest_dir_for_target_service_file}${target_service_file}
 * Reload daemon
 * Enable service ${target_service_file}"
 
-    printf "\Proceed? [y/n]\n${red}>>>${reset} "
+    printf "\nProceed? [y/n]\n${red}>>>${reset} "
     read is_ok
 
     case $is_ok in
