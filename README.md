@@ -66,7 +66,7 @@ You can watch [example video](https://github.com/1RaY-1/linux-startup/blob/main/
 # Problems
 You can encounter problems.
 
-To check if you have some problems with this script or not, you can try making script [test.py](https://github.com/1RaY-1/linux-startup/blob/main/test/test.py) or [test.sh](https://github.com/1RaY-1/bash-startup/blob/main/test/test.sh) startup
+To check if you have some problems with this script or not, you can try making script [test.py](https://github.com/1RaY-1/linux-startup/blob/main/test/test.py) or [test.sh](https://github.com/1RaY-1/bash-startup/blob/main/test/test.sh) startup.
 
 So
 
@@ -92,9 +92,10 @@ If you encounter more problems, please tell me by creating an [issue](https://gi
 
 -----------------------------------------------------------------------
 
-# Note few things
-* Before making any script startup, make sure it has a [shebang](https://en.wikipedia.org/wiki/Shebang_(Unix))
-* If you wanna understand how to manually make any script startup, here some links that should help you:
+# Note few things:
+* Before making any script startup, make sure you added a [shebang](https://en.wikipedia.org/wiki/Shebang_(Unix)) in there.
+* Your startup script will execute commands as superuser.
+* If you wanna understand how to manually make any script startup, here some links that will help you:
 
 https://stackoverflow.com/questions/12973777/how-to-run-a-shell-script-at-startup
 
