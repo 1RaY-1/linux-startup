@@ -83,7 +83,7 @@ check_if_ok(){
     
     # check if running as root
     if [ $EUID -ne 0 ]; then
-        problems+=("Please run me as root")
+        problems+=("Please run me as root!")
     fi
 
     # check if needed directory exists
