@@ -3,6 +3,7 @@ A program to easily make any script startup on Linux, so at every boot a needed 
 
 <details>
   <summary><h3>Tested on</h3></summary>
+I've tested this program on the following Distros:
 
 - **Linux Mint**
 - **Fedora**
