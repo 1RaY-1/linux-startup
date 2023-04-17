@@ -3,7 +3,6 @@ A program to easily make any script startup on Linux.
 
 <details>
   <summary><h3>Tested on</h3></summary>
-I've tested this program on the following Distros (and it worked):
 
 - **Linux Mint**
 - **Fedora**
