@@ -81,6 +81,11 @@ check_if_ok(){
 
     problems=()
     
+    # check if the init system is systemd
+    if [ ! "command -v systemctl" ]; then
+        problems+=("Your distribution is not using 'systemd'!")
+    fi
+
     # check if running as root
     if [ $EUID -ne 0 ]; then
         problems+=("Please run me as root!")
@@ -181,5 +186,4 @@ main(){
     ask_if_proceed
     register_on_startup
 }
-
 main
