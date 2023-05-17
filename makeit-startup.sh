@@ -21,11 +21,11 @@ readonly reset="\e[0m"
 
 # configure
 configure(){
-    printf "Enter full path to your script that you wanna make startup\n${red}>>> ${reset}"
+    printf "Enter full path to the script that you wanna make startup\n${red}>>> ${reset}"
     read target_file
 
     echo "
-Do you wanna move this script other directory?
+Do you wanna move this script to other directory?
 Options:
 1-- No
 2-- Move it to '/usr/local/sbin/'
