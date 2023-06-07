@@ -1,82 +1,69 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-# exit on any error
 set -e
 
-if ! [ `command -v wget` ]; then
-    echo "Need 'wget' oackage to download files from github!"
-    echo "Install it with your package manager"
+needed_file=makeit-startup.sh
+needed_dir=0
+
+if [ -d $HOME/bin/ ]; then
+    needed_dir=$HOME/bin/
+
+elif [ -d /usr/bin/ ]; then
+    needed_dir=/usr/bin/
+
+elif [ -d /usr/local/bin/ ]; then
+    needed_dir=/usr/local/bin/
+
+elif [ -d /bin/ ]; then
+    needed_dir=/bin/
+
+else 
+    echo "Sorry, I don't know what to do."
     exit 1
 fi
 
-echo -ne "Check-Ip installer for Linux/Termux\n"
-sleep 2s
 
-case $(uname -m) in
-    x86_64) ARCH="amd64" 
-    echo "Downloading executable for: ${ARCH}"; sleep 1s
-    wget -O check-ip https://github.com/1ray-1/check-ip/releases/latest/download/check-ip-${ARCH}
-    ;;
-    i386 | i686) ARCH="i386" 
-    echo "Downloading executable for: ${ARCH}"; sleep 1s
-    wget -O check-ip https://github.com/1ray-1/check-ip/releases/latest/download/check-ip-${ARCH}
-    ;;
-    arm64) ARCH="arm64" 
-    echo "Downloading executable for: ${ARCH}"; sleep 1s
-    wget -O check-ip https://github.com/1ray-1/check-ip/releases/latest/download/check-ip-${ARCH}
-    ;;
-    aarch64) ARCH="aarch64"
-    echo "Downloading executable for: ${ARCH}"; sleep 1s
-    wget -O check-ip https://github.com/1ray-1/check-ip/releases/latest/download/check-ip-${ARCH}
-    ;;
-    *)
-    echo "Will compile it from source"; sleep 1s
-    wget https://raw.githubusercontent.com/1ray-1/check-ip/main/check-ip.c
-    {
-    gcc check-ip.c -o check-ip  &&
-    echo "Compiled successfully" &&
-    sleep 2s
-    } || {
-    echo "Looks like C compiler is not installed or something went wrong!"
-    exit 
-    }
-    ;;
-esac
-
-chmod +x check-ip
-
-# for android
-if [ -d /data/data/com.termux/files/usr/bin/ ]; then
-    echo "Installing check-ip in /data/data/com.termux/files/usr/bin/";sleep 1s
-    # in case
-    if [ -f /data/data/com.termux/files/usr/bin/check-ip ]; then
-        echo "Hey '/data/data/com.termux/files/usr/bin/check-ip' already exists, will replace it. Press ENTER to continue"
-        read tmp
-        rm /data/data/com.termux/files/usr/bin/check-ip
+check(){
+    if [ $EUID -ne 0 ]; then
+        echo -e "Please run me as root\nType: sudo bash $0"
+        exit 1
     fi
-    mv check-ip /data/data/com.termux/files/usr/bin/
 
-# for linux
-elif [ -d /usr/bin/ ]; then
-    echo "Installing check-ip in /usr/bin/";sleep 1s
-    if [ -f /usr/bin/check-ip ]; then
-        echo "Hey '/usr/bin/check-ip' already exists, will replace it. Press ENTER to continue"
-        read tmp
-        sudo rm /usr/bin/check-ip
+    if [ ! -f ${needed_file} ]; then
+        echo "Missing needed file: '${needed_file}'"
+        exit 1
     fi
-    sudo mv check-ip /bin/
-    
-elif [ -d /bin/ ]; then
-    echo "Installing check-ip in /bin/";sleep 1s
-    if [ -f /bin/check-ip ]; then
-        echo "Hey '/bin/check-ip' already exists, will replace it. Press ENTER to continue"
-        read tmp
-        sudo rm /bin/check-ip
+}
+
+
+do_it(){
+    # just in case
+    if [ -f "${needed_dir}${needed_file%.*}" ]; then
+        echo -e "[!] File '${needed_dir}${needed_file%.*}' already exists."
+        echo "Wanna replace it or cancel this installation? [1:replace/2:cancel]"
+        read choice
+        if [[ $choice = "replace" || $choice -eq 1 ]]; then rm ${needed_dir}${needed_file%.*}
+        else echo "Exiting...";exit 0
+        fi
     fi
-    sudo mv check-ip /bin/
+    echo "Installing..."
+    sleep 0.5
 
-else echo "Sorry, I don't know what to do."; exit 1
-fi
+    cp ${needed_file} ${needed_dir}${needed_file%.*}
+    chmod +x ${needed_dir}${needed_file%.*}
 
-echo -ne "Done!\nType 'check-ip -h' to get started."
-echo "Or read README.md for more."
+    echo "
+Done!
+Now you can run this program by typing: 'sudo ${needed_file%.*}'
+
+To test if it works, you can try making '/test/test.py' startup.
+
+To remove it, type: sudo rm ${needed_dir}${needed_file%.*}
+
+For more info read README.md 
+"
+}
+
+check
+do_it
+exit
