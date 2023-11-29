@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Author: Ray (https://github.com/1RaY-1)
+# Author: 1RaY-1 (https://github.com/1RaY-1)
 # LICENSE: MIT (see LICENSE file)
 # Version: 1.1
 # Description:
@@ -8,7 +8,7 @@
 #   It can be bash, python, or any other interpreted scripts.
 #   if you encounter problems, see https://github.com/1RaY-1/linux-startup/blob/main/README.md#problems
 
-# Tested on: Linux Mint, Fedora, Parrot OS, Kali Linux, Arch Linux
+# I've tested this on: Linux Mint, Fedora, Parrot OS, Kali Linux, Arch Linux
 
 
 # exit on any error
@@ -104,7 +104,7 @@ check_if_ok(){
     else
         # check if needed files contains shebang
         read -r firstline<${target_file}
-        [[ ! $firstline == "#!"* ]] && problems+=("Please add a shebang to '${target_file}'! If don't know what is a shebang, see: https://en.wikipedia.org/wiki/Shebang_(Unix)")
+        [[ ! $firstline == "#!"* ]] && problems+=("Please add a shebang into '${target_file}'! Read about shebang here: https://en.wikipedia.org/wiki/Shebang_(Unix)")
         unset firstline
     fi
 
