@@ -14,7 +14,7 @@ A program to easily make any script startup on Linux.
 -----------------------------------------------------------------------
 
 # How it works ?
-[It](https://github.com/1RaY-1/bash-startup/blob/main/makeit-startup.sh) does this things:
+[The program](https://github.com/1RaY-1/bash-startup/blob/main/makeit-startup.sh) does this things:
 
 1. Locate your needed script (that you wanna be startup)
 2. Ask you if you want to move this script to other directory
