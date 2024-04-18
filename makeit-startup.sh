@@ -27,10 +27,10 @@ configure(){
     echo "
 Do you wanna move this script to other directory?
 Options:
-1-- No
+1-- No (skip this)
 2-- Move it to '/usr/local/sbin/'
 3-- Move it to '/lib/systemd/system-sleep/'
-4-- Move it to other dicrectory (you choose)
+4-- Move it to other dicrectory (you'll type it)
 "
     printf "${red}>>>${reset} "
     read choice
