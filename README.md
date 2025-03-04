@@ -18,7 +18,7 @@ A program to easily make any script startup on Linux.
 
 1. Locate your needed script (that you want to be startup)
 2. Ask you if you want to move this script to other directory
-3. Check if everything is fine
+3. Check if everything's fine (check if needed file exists, contains shebang, etc...)
 4. Move this script to other directory (if you want to)
 5. Make it executable
 6. Create and edit service file
