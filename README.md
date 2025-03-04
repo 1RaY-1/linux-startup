@@ -14,11 +14,11 @@ A program to easily make any script startup on Linux.
 -----------------------------------------------------------------------
 
 # How it works ?
-[The program](https://github.com/1RaY-1/bash-startup/blob/main/makeit-startup.sh) does this things:
+[The program](https://github.com/1RaY-1/bash-startup/blob/main/makeit-startup.sh) performs the following tasks:
 
-1. Locate your needed script (that you wanna be startup)
+1. Locate your needed script (that you want to be startup)
 2. Ask you if you want to move this script to other directory
-3. Check if everything is ok
+3. Check if everything is fine
 4. Move this script to other directory (if you want to)
 5. Make it executable
 6. Create and edit service file
