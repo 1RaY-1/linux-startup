@@ -4,11 +4,11 @@
 # LICENSE: MIT (see LICENSE file)
 # Version: 1.1
 # Description:
-#   A program to make scripts startup on Linux in few clicks (so at every boot a needed script executes automatically).
-#   It can be bash, python, or any other interpreted scripts.
+#   A program to set scripts to run at startup on Linux in few clicks (so at every boot a needed script executes automatically, thanks to a .service file)
+#   It supports bash, python, or other INTERPRETED scripts
 #   if you encounter problems, see https://github.com/1RaY-1/linux-startup/blob/main/README.md#problems
-
-# I've tested this on: Linux Mint, Fedora, Parrot OS, Kali Linux, Arch Linux
+#
+# Tested on: Linux Mint, Fedora, Parrot OS, Kali Linux, Arch Linux
 
 
 # exit on any error
@@ -21,7 +21,7 @@ readonly reset="\e[0m"
 
 # configure
 configure(){
-    printf "Enter full path to the script that you wanna make startup\n${red}>>> ${reset}"
+    printf "Enter the full path of the script that you wanna set as a startup\n(Note: Variables like \$PWD, \$HOME will not work here)\n${red}>>> ${reset}"
     read target_file
 
     echo "
@@ -38,7 +38,7 @@ Options:
     temp_target_file=${target_file%.*}.service
     temp_target_file=${temp_target_file##*/}
     target_service_file=${temp_target_file}
-    # i had problems when tried to move service files to '/etc/systemd/user/' so i use '/etc/systemd/system/' instead
+    # I had problems when tried to move service files to '/etc/systemd/user/' so i use '/etc/systemd/system/' instead
     dest_dir_for_target_service_file=/etc/systemd/system/
     
     case $choice in
@@ -82,7 +82,7 @@ check_if_ok(){
     problems=()
     
     # check if the init system is systemd
-    if [ ! "command -v systemctl" ]; then
+    if ! [[ `command -v systemctl` ]]; then
         problems+=("Your distribution is not using 'systemd'!")
     fi
 
@@ -104,7 +104,7 @@ check_if_ok(){
     else
         # check if needed files contains shebang
         read -r firstline<${target_file}
-        [[ ! $firstline == "#!"* ]] && problems+=("Please add a shebang into '${target_file}'! Read about shebang here: https://en.wikipedia.org/wiki/Shebang_(Unix)")
+        [[ ! $firstline == "#!"* ]] && problems+=("Please add a shebang to '${target_file}'! Read about shebang here: https://en.wikipedia.org/wiki/Shebang_(Unix)")
         unset firstline
     fi
 
@@ -121,12 +121,12 @@ check_if_ok(){
 # ask user if proceed or no
 ask_if_proceed(){
     echo "
-Will do this things:
-$([ $move_target_file_to_another_dir -eq 1 ] && echo "* Move $target_file to $dest_dir_for_target_file" || :) 
+I will do these things:
+$([ $move_target_file_to_another_dir -eq 1 ] && echo "* Move '$target_file' to '$dest_dir_for_target_file'" || :) 
 * Make '${target_file##*/}' executable
-* Create and edit ${dest_dir_for_target_service_file}${target_service_file}
+* Create and edit '${dest_dir_for_target_service_file}${target_service_file}'
 * Reload daemon
-* Enable service ${target_service_file}"
+* Enable service '${target_service_file}'"
 
     printf "\nProceed? [y/n]\n${red}>>>${reset} "
     read is_ok
