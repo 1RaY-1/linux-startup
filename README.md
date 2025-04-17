@@ -27,7 +27,7 @@ A program to easily make any script startup on Linux.
 
 -----------------------------------------------------------------------
 
-# How to install ?
+# How to download/install ?
 Type the following commands in your terminal
 * `git clone https://github.com/1RaY-1/linux-startup`
 * `cd linux-startup`
