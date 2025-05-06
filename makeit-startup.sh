@@ -92,7 +92,7 @@ Options:
 #    detect the non-root user (because the script is supposed to be executed as ROOT)
     if [ -n "$SUDO_USER" ]; then
         ruser="$SUDO_USER"
-    #elif [ -n "$LOGNAME" ]; then # apparently this isn't needed, but I'm gonna just let it commented for now
+    #elif [ -n "$LOGNAME" ]; then # apparently this isn't needed, but I'm just gonna let itcommented for now
     #    REAL_USER="$LOGNAME"
     elif [ -n "$USER" ] && [ "$USER" != "root" ]; then
         ruser="$USER"
@@ -128,6 +128,11 @@ check_if_ok(){
     # check if the init system is systemd
     if ! [[ `command -v systemctl` ]]; then
         problems+=("Your distribution is not using 'systemd'!")
+    fi
+
+    # check if running with elevated privileges
+    if [ $EUID -ne 0 ]; then
+        problems+=("Please run me with sudo!")
     fi
 
     # check if needed directory exists
@@ -236,7 +241,7 @@ register_on_startup(){
         #else
         #    ruser=$(id -un 1000 2>/dev/null || echo "unknown")
         fi
-        
+
         config_for_target_service_file="[Unit]\nDescription=Startup_script\n\n[Service]\nUser=$ruser\nGroup=$ruser\nExecStart=${dest_dir_for_target_file}/${target_file}\nRestart=always\n\n[Install]\nWantedBy=multi-user.target\n"
         #config_for_target_service_file="[Unit]\nDescription=Startup_script\n\n[Service]\nExecStart=${dest_dir_for_target_file}/${target_file}\n\n[Install]\nWantedBy=multi-user.target\n"
     fi
