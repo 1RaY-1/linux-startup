@@ -25,7 +25,7 @@ fi
 
 check(){
     if [ $EUID -ne 0 ]; then
-        echo -e "Please run me as root\nType: sudo bash $0"
+        echo -e "Please run me with sudo\nType: sudo bash $0"
         exit 1
     fi
 
