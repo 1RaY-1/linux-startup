@@ -44,7 +44,7 @@ Do you wanna move this script to other directory?
 Options:
 1-- No (skip this)
 2-- Move it to $( [ -d "/usr/local/sbin" ] && echo "'/usr/local/sbin/'" || echo "'/usr/local/sbin/' ${red}DOESN'T EXIST${reset}" )
-3-- Move it to $( [ -d "/lib/systemd/system-sleep" ] && echo '/lib/systemd/system-sleep/' || echo "'/lib/systemd/system-sleep' ${red}DOESN'T EXIST${reset}")
+3-- Move it to $( [ -d "/lib/systemd/system-sleep" ] && echo "'/lib/systemd/system-sleep/'" || echo "'/lib/systemd/system-sleep' ${red}DOESN'T EXIST${reset}")
 4-- Move it to other dicrectory (you'll type it)
 "
     printf "${red}>>>${reset} "
@@ -161,8 +161,8 @@ check_if_ok(){
         if [ -f "${dest_dir_for_target_service_file}${target_service_file}" ]; then
             echo -ne "${red}[Warning]${reset}"; sleep 0.8s
             echo -e "\nThe service file ${dest_dir_for_target_service_file}${target_service_file} already exists"
-            echo "This script is supposed to call the new service file the same as the startup script (at least as for now)"
-            echo "Are you willing to override it?"
+            echo "I'm supposed to name the new service file the same as the startup script (at least as for now)"
+            echo -e "\nAre you willing to override it?"
             echo "Y -- Just override it and proceed"
             echo "N -- Skip and abort"
             printf "\n${red}>>>${reset} "
