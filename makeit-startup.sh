@@ -2,14 +2,19 @@
 
 # Author: 1RaY-1 (https://github.com/1RaY-1)
 # LICENSE: MIT (see LICENSE file)
-# Version: 1.1
+# Version: 1.3
 # Description:
 #   A program to set scripts to run at startup on Linux in few clicks (so at every boot a needed script executes automatically, thanks to a .service file)
 #   It supports bash, python, or other INTERPRETED scripts
 #   if you encounter problems, see https://github.com/1RaY-1/linux-startup/blob/main/README.md#problems
 #
-# Tested on: Linux Mint, Fedora, Parrot OS, Kali Linux, Arch Linux
+# Tested on: Linux Mint, Fedora, Parrot OS, Kali Linux, Arch Linux, Debian
+# This script requires to be ran with BASH to function properly
 
+# TODO
+# Edit/improve the .service file
+# Ask user if the startup script should be restarted every time it stops (due to any reasons) or no
+# Add an option to rename the future (target) .service file
 
 # exit on any error
 set -e
@@ -19,17 +24,27 @@ readonly green="\e[32m"
 readonly red="\e[31m"
 readonly reset="\e[0m" 
 
+# Some variables
+override_service_file=0 # <-- ZERO means NO
+
+# a function to exit and print a text at the same time
+die(){
+    echo -ne "$1"
+    exit
+}
+
 # configure
 configure(){
-    printf "Enter the full path of the script that you wanna set as a startup\n(Note: Variables like \$PWD, \$HOME will not work here)\n${red}>>> ${reset}"
+#   Before it worked when I was typing the RELATIVE path to a script, but now it apparently just doesn't work
+    printf "Enter the full path of the script that you wanna set as a startup\n(Note: Variables (\$PWD, \$HOME, etc...) will not work here)\n${red}>>> ${reset}"
     read target_file
 
-    echo "
+    echo -ne "
 Do you wanna move this script to other directory?
 Options:
 1-- No (skip this)
-2-- Move it to '/usr/local/sbin/'
-3-- Move it to '/lib/systemd/system-sleep/'
+2-- Move it to $( [ -d "/usr/local/sbin" ] && echo "'/usr/local/sbin/'" || echo "'/usr/local/sbin/' ${red}DOESN'T EXIST${reset}" )
+3-- Move it to $( [ -d "/lib/systemd/system-sleep" ] && echo '/lib/systemd/system-sleep/' || echo "'/lib/systemd/system-sleep' ${red}DOESN'T EXIST${reset}")
 4-- Move it to other dicrectory (you'll type it)
 "
     printf "${red}>>>${reset} "
@@ -73,8 +88,37 @@ Options:
         ;;
     esac
     unset choice
+
+#    detect the non-root user (because the script is supposed to be executed as ROOT)
+    if [ -n "$SUDO_USER" ]; then
+        ruser="$SUDO_USER"
+    #elif [ -n "$LOGNAME" ]; then # apparently this isn't needed, but I'm gonna just let it commented for now
+    #    REAL_USER="$LOGNAME"
+    elif [ -n "$USER" ] && [ "$USER" != "root" ]; then
+        ruser="$USER"
+    #else # this is probably not needed either
+    #    ruser=$(id -un 1000 2>/dev/null || echo "unknown")
+    fi
+
+#    Ask if want to execute the script (at every boot) as root or as a user
+    echo -e "\nDo you want the script to be executed as root or as $ruser ?
+    Options: 
+    1 --- Execute as a user ($ruser)
+    2 --- Execute as root"
+
+    printf "\n${red}>>>${reset} "
+    read choice
+
+    case $choice in
+        1) id_choice="user" ;;
+        2) id_choice="root" ;;
+        *) echo "Invalid answer!" ; exit 1 ;;
+
+    esac
+    unset choice
 }
 
+# Check for problems before proceeding
 check_if_ok(){
     printf "Checking some things..."
     sleep 0.8
@@ -84,11 +128,6 @@ check_if_ok(){
     # check if the init system is systemd
     if ! [[ `command -v systemctl` ]]; then
         problems+=("Your distribution is not using 'systemd'!")
-    fi
-
-    # check if running as root
-    if [ $EUID -ne 0 ]; then
-        problems+=("Please run me as root!")
     fi
 
     # check if needed directory exists
@@ -109,11 +148,35 @@ check_if_ok(){
     fi
 
     if [ ${#problems[@]} -ne 0 ]; then
-        printf "\n${red}Some problems occurred:${reset}\n\n"
+        printf "\n${red}Some problems occurred:${reset}\n\n"; sleep 0.8s
         for eachProblem in "${problems[@]}"; do echo -e "${red}*${reset} $eachProblem"; done
         exit 1
     else
-        printf "${green}OK${reset}\n"
+#        Check if the service file (that were gonna create) already exists
+        if [ -f "${dest_dir_for_target_service_file}${target_service_file}" ]; then
+            echo -ne "${red}[Warning]${reset}"; sleep 0.8s
+            echo -e "\nThe service file ${dest_dir_for_target_service_file}${target_service_file} already exists"
+            echo "This script is supposed to call the new service file the same as the startup script (at least as for now)"
+            echo "Are you willing to override it?"
+            echo "Y -- Just override it and proceed"
+            echo "N -- Skip and abort"
+            printf "\n${red}>>>${reset} "
+            read choice
+
+            case $choice in
+                Y | y | yes | YES)
+                    echo -ne "${green}Proceeding${reset}\n"
+                    override_service_file=1
+                    sleep 0.8s
+                    ;;
+                *)
+                    echo -ne "${red}Aborting...${reset}"
+                    sleep 0.8s
+                    exit ;;
+            esac
+        else
+            printf "${green}OK${reset}\n"
+            fi
     fi
     unset problems
 }
@@ -121,12 +184,12 @@ check_if_ok(){
 # ask user if proceed or no
 ask_if_proceed(){
     echo "
-I will do these things:
-$([ $move_target_file_to_another_dir -eq 1 ] && echo "* Move '$target_file' to '$dest_dir_for_target_file'" || :) 
+These things will be performed:
+$( [ $move_target_file_to_another_dir -eq 1 ] && echo "* Move '$target_file' to '$dest_dir_for_target_file'" || :) 
 * Make '${target_file##*/}' executable
-* Create and edit '${dest_dir_for_target_service_file}${target_service_file}'
+$( [ $override_service_file -eq 1 ] && echo "* Override (the existant) '${dest_dir_for_target_service_file}${target_service_file}'" || echo "* Create and edit '${dest_dir_for_target_service_file}${target_service_file}'" )
 * Reload daemon
-* Enable service '${target_service_file}'"
+* Enable service '${target_service_file}' "
 
     printf "\nProceed? [y/n]\n${red}>>>${reset} "
     read is_ok
@@ -142,41 +205,66 @@ $([ $move_target_file_to_another_dir -eq 1 ] && echo "* Move '$target_file' to '
 register_on_startup(){
     if [ $move_target_file_to_another_dir -eq 1 ]; then
         printf "Moving  ${target_file} to ${dest_dir_for_target_file} ...";sleep 0.8
-        mv $target_file $dest_dir_for_target_file
+        sudo mv $target_file $dest_dir_for_target_file
+#       If everything's fine, it'll print the OK msg, otherwise exit
+        #printf "${green}OK${reset}\n"
+        [[ $? -eq 0 ]] && printf "${green}OK${reset}\n" || die "${red}Something went wrong${reset}\n"
         target_file=${dest_dir_for_target_file}/${target_file##*/}
-        printf "${green}OK${reset}\n"
         
     fi
-    
+
+#   Change perms of the exec file
     printf "Changing permissions for ${target_file} ...";sleep 0.8
     sudo chmod +x ${target_file}
-    target_file=${target_file##*/}
-    printf "${green}OK${reset}\n"
-    
-    # Do not remove underscores
-    config_for_target_service_file="[Unit]\nDescription=Startup_script\n\n[Service]\nExecStart=${dest_dir_for_target_file}/${target_file}\n\n[Install]\nWantedBy=multi-user.target\n"
+#   If everything's fine, it'll print the OK msg, otherwise exit
+    [[ $? -eq 0 ]] && printf "${green}OK${reset}\n" || die "${red}Something went wrong${reset}\n"
+    target_file=${target_file##*/} # <-- I think this  code shouldn't give any errors
+        
+#   Detect the user again (if needed)
+    if [ $id_choice == "root" ] ; then
+#       # Do not remove underscores from this variable
+        config_for_target_service_file="[Unit]\nDescription=Startup_script\n\n[Service]\nExecStart=${dest_dir_for_target_file}/${target_file}\n\n[Install]\nWantedBy=multi-user.target\n"
+    elif [ $id_choice == "user" ] ; then
+        
+        # detect the non-root user (because the script is supposed to be executed as ROOT)
+        if [ -n "$SUDO_USER" ]; then
+            ruser="$SUDO_USER"
+        #elif [ -n "$LOGNAME" ]; then
+        #    REAL_USER="$LOGNAME"
+        elif [ -n "$USER" ] && [ "$USER" != "root" ]; then
+            ruser="$USER"
+        #else
+        #    ruser=$(id -un 1000 2>/dev/null || echo "unknown")
+        fi
+        
+        config_for_target_service_file="[Unit]\nDescription=Startup_script\n\n[Service]\nUser=$ruser\nGroup=$ruser\nExecStart=${dest_dir_for_target_file}/${target_file}\nRestart=always\n\n[Install]\nWantedBy=multi-user.target\n"
+        #config_for_target_service_file="[Unit]\nDescription=Startup_script\n\n[Service]\nExecStart=${dest_dir_for_target_file}/${target_file}\n\n[Install]\nWantedBy=multi-user.target\n"
+    fi
     
     printf "Editing ${dest_dir_for_target_service_file}${target_service_file} ...";sleep 0.8
-    printf ${config_for_target_service_file} > ${dest_dir_for_target_service_file}${target_service_file}
-    printf "${green}OK${reset}\n"
+    printf "${config_for_target_service_file}" > "${dest_dir_for_target_service_file}${target_service_file}"
+    [[ $? -eq 0 ]] && printf "${green}OK${reset}\n" || die "${red}Something went wrong${reset}\n"
 
     printf "Reloading daemon...";sleep 0.8
-    systemctl daemon-reload
-    printf "${green}OK${reset}\n"
+    sudo systemctl daemon-reload
+    [[ $? -eq 0 ]] && printf "${green}OK${reset}\n" || die "${red}Something went wrong${reset}\n"
 
     printf "Enabling service: ${target_service_file} ...";sleep 0.8
-    systemctl enable ${target_service_file}
-    printf "${green}OK${reset}\n"
+    sudo systemctl enable ${target_service_file}
+    [[ $? -eq 0 ]] && printf "${green}OK${reset}\n" || die "${red}Something went wrong${reset}\n"
+
+    echo "${green}Done!${reset}"; sleep 1s
 
     # print some useful info
     echo -e "
-${green}Done${reset}
-From now your script will execute at every boot.
+Your script will now execute at every boot.
 
 ${green}Do ${red}not${reset} forget that:
-${red}*${reset} You can edit ${dest_dir_for_target_service_file}${target_service_file} at any time.
-${red}*${reset} You can disable ${target_service_file} by typing: sudo systemctl disable ${target_service_file}
-${red}*${reset} You can remove ${target_service_file} by typing: sudo rm ${dest_dir_for_target_service_file}${target_service_file}
+${red}*${reset} You can ${green}edit${reset} '${dest_dir_for_target_service_file}${target_service_file}' at any time (with sudo)
+${red}*${reset} You can ${green}start${reset} (right now) '${target_service_file}' with: sudo systemctl start ${target_service_file}
+${red}*${reset} You can ${green}check${reset} the status of '${target_service_file}' with: systemctl status ${target_service_file}
+${red}*${reset} You can ${green}disable${reset} '${target_service_file}' with: sudo systemctl disable ${target_service_file}
+${red}*${reset} You can ${green}remove${reset} '${target_service_file}' with: sudo rm ${dest_dir_for_target_service_file}${target_service_file}
 "
 }
 
@@ -186,4 +274,5 @@ main(){
     ask_if_proceed
     register_on_startup
 }
+
 main
