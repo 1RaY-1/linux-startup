@@ -258,7 +258,7 @@ register_on_startup(){
     sudo systemctl enable ${target_service_file}
     [[ $? -eq 0 ]] && printf "${green}OK${reset}\n" || die "${red}Something went wrong${reset}\n"
 
-    echo "${green}Done!${reset}"; sleep 1s
+    echo -en "${green}Done!${reset}"; sleep 1s
 
     # print some useful info
     echo -e "
