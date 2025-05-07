@@ -56,11 +56,9 @@ do_it(){
 Done!
 Now you can run this program by typing: 'sudo ${needed_file%.*}'
 
-To test if it works, you can try making '/test/test.py' startup.
-
 To remove it, type: sudo rm ${needed_dir}${needed_file%.*}
 
-For more info read README.md 
+For more information, read README.md 
 "
 }
 
