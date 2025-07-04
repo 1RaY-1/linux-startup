@@ -2,7 +2,7 @@
 
 # Author: 1RaY-1 (https://github.com/1RaY-1)
 # LICENSE: MIT (see LICENSE file)
-# Version: 1.3
+currentv=1.3 # <-- Version
 # Description:
 #   A program to set scripts to run at startup on Linux in few clicks (so at every boot a needed script executes automatically, thanks to a .service file)
 #   It supports bash, python, or other INTERPRETED scripts
@@ -19,6 +19,7 @@
 # exit on any error
 set -e
 
+
 # colors
 readonly green="\e[32m"
 readonly red="\e[31m"
@@ -26,6 +27,14 @@ readonly reset="\e[0m"
 
 # Some variables
 override_service_file=0 # <-- ZERO means NO
+
+version_check(){
+    latestv=$(curl -s https://api.github.com/repos/1RaY-1/linux-startup/releases/latest | grep '"tag_name"' | sed -E 's/.*"([^"]+)".*/\1/')
+
+    if (( $(echo "$latestv > $currentv" |bc -l) )); then
+        echo -e "A new version of Linux Startup is available: $latestv\n"; sleep 0.5s
+    fi
+}
 
 # a function to exit and print a text at the same time
 die(){
@@ -274,6 +283,13 @@ ${red}*${reset} You can ${green}remove${reset} '${target_service_file}' with: su
 }
 
 main(){
+#   if 'wget' & 'curl' are installed on this system and there is connection with github, then we can check if there is a new version of Linux Startup available
+    if [[ `command -v curl` ]] && [[ `command -v wget` ]] &> /dev/null; then
+        wget -q --spider https://github.com/1RaY-1/linux-startup/releases
+        if [ $? -eq 0 ]; then
+            version_check
+        fi
+    fi
     configure
     check_if_ok
     ask_if_proceed
