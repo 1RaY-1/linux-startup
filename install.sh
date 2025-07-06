@@ -5,20 +5,14 @@ set -e
 needed_file=makeit-startup.sh
 needed_dir=0
 
-if [ -d $HOME/bin/ ]; then
-    needed_dir=$HOME/bin/
+if [ -d /usr/local/bin/ ]; then
+    needed_dir=/usr/local/bin/
 
 elif [ -d /usr/bin/ ]; then
     needed_dir=/usr/bin/
 
-elif [ -d /usr/local/bin/ ]; then
-    needed_dir=/usr/local/bin/
-
-elif [ -d /bin/ ]; then
-    needed_dir=/bin/
-
 else 
-    echo "Sorry, I don't know what to do."
+    echo "Neither '/usr/local/bin/' nor '/usr/bin/' exists"
     exit 1
 fi
 
@@ -64,4 +58,3 @@ For more information, read README.md
 
 check
 do_it
-exit
