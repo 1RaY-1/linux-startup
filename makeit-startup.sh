@@ -6,15 +6,21 @@ currentv=1.3 # <-- Version
 # Description:
 #   A program to set scripts to run at startup on Linux in few clicks (so at every boot a needed script executes automatically, thanks to a .service file)
 #   It supports bash, python, or other INTERPRETED scripts
-#   if you encounter problems, see https://github.com/1RaY-1/linux-startup/blob/main/README.md#problems
+#   if you face some issues, see https://github.com/1RaY-1/linux-startup/blob/main/README.md#problems
+#   Or create an ISSUE here: https://github.com/1RaY-1/linux-startup/issues
+
+
+# Tested on: Pop_!OS 22.04 (LTS), Linux Mint (older version), Arch Linux (older) , Debian (older version)
+# Fedora (older version, SELinux probably needs to be set to 'permissive')
 #
-# Tested on: Linux Mint, Fedora, Parrot OS, Kali Linux, Arch Linux, Debian
-# This script requires to be ran with BASH to function properly
+# Run this script only with BASH, it won't work with ZSH, SH
 
 # TODO
-# Edit/improve the .service file
-# Ask user if the startup script should be restarted every time it stops (due to any reasons) or no
-# Add an option to rename the future (target) .service file
+# improve the .service file
+# Ask user if the startup script should be restarted every time it stops or not
+# Add an option to rename the .service file
+# Maybe add an option to create a text file with a list of those commands (stop, start service file, etc...) mentioned at the end
+# Test it more & Make it for stable/reliable
 
 # exit on any error
 set -e
@@ -28,15 +34,16 @@ readonly reset="\e[0m"
 # Some variables
 override_service_file=0 # <-- ZERO means NO
 
+# this function checks if a new release of linux-startup is available
 version_check(){
     latestv=$(curl -s https://api.github.com/repos/1RaY-1/linux-startup/releases/latest | grep '"tag_name"' | sed -E 's/.*"([^"]+)".*/\1/')
 
     if (( $(echo "$latestv > $currentv" |bc -l) )); then
-        echo -e "A new version of Linux Startup is available: $latestv\n"; sleep 0.5s
+        echo -e "A new version of Linux Startup is available: ${green}$latestv${reset}\n"; sleep 0.5s
     fi
 }
 
-# a function to exit and print a text at the same time
+# be able to exit and print a text at the same time
 die(){
     echo -ne "$1"
     exit
@@ -45,7 +52,7 @@ die(){
 # configure
 configure(){
 #   Before it worked when I was typing the RELATIVE path to a script, but now it apparently just doesn't work
-    printf "Enter the full path of the script that you wanna set as a startup\n(Note: Variables (\$PWD, \$HOME, etc...) will not work here)\n${red}>>> ${reset}"
+    printf "Enter the full path of the script that you wanna set as a startup\n(Note: Variables like \$PWD, \$HOME, etc... won't work here)\n${red}>>> ${reset}"
     read target_file
 
     echo -ne "
@@ -267,7 +274,7 @@ register_on_startup(){
     sudo systemctl enable ${target_service_file}
     [[ $? -eq 0 ]] && printf "${green}OK${reset}\n" || die "${red}Something went wrong${reset}\n"
 
-    echo -en "${green}Done!${reset}"; sleep 1s
+    echo -en "\n${green}Done!${reset}"; sleep 0.8s
 
     # print some useful info
     echo -e "
@@ -283,7 +290,8 @@ ${red}*${reset} You can ${green}remove${reset} '${target_service_file}' with: su
 }
 
 main(){
-#   if 'wget' & 'curl' are installed on this system and there is connection with github, then we can check if there is a new version of Linux Startup available
+#   supposing 'wget' and 'curl' are installed and there is internet connection, a quick check for updates will be performed
+#   but user won't be forced to update
     if [[ `command -v curl` ]] && [[ `command -v wget` ]] &> /dev/null; then
         wget -q --spider https://github.com/1RaY-1/linux-startup/releases
         if [ $? -eq 0 ]; then
