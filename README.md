@@ -36,6 +36,12 @@ You can run install.sh (it'll simply move the script to a *bin* directory), but 
 
 -----------------------------------------------------------------------
 
+
+## Uninstalling
+```sudo rm $(which makeit-startup)```
+
+-----------------------------------------------------------------------
+
 ## Running
 Simply execute the script without any arguments (**with BASH**):
 ```
