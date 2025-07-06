@@ -1,65 +1,46 @@
 # About
-A program to easily make any script startup on Linux.
+A script to easily make any script startup on Linux using SYSTEMD
 
 <details>
   <summary><h3>Tested on</h3></summary>
 
-- **Linux Mint**
-- **Fedora**
-- **Parrot OS**
-- **Kali Linux**
-- **Arch Linux**
+- **Pop_!OS 22.04 (LTS)**
+- **Linux Mint (older version)**
+- **Fedora (older version, with SELinux set to permissive)**
+- **Arch Linux (older)**
 </details>
 
 -----------------------------------------------------------------------
 
-# How it works ?
-[The program](https://github.com/1RaY-1/bash-startup/blob/main/makeit-startup.sh) performs the following tasks:
+# How to use it
+After executing [this script](https://github.com/1RaY-1/bash-startup/blob/main/makeit-startup.sh) you'll have to do the following:
 
-1. Locate your needed script (that you want to be startup)
-2. Ask you if you want to move this script to other directory
+0. Enter full path for the needed script
+1. Decide if you want to move it to other directory or not
+2. Decide if to execute startup script as root or as user
 3. Check if everything's fine (check if needed file exists, contains shebang, etc...)
-4. Move this script to other directory (if you want to)
-5. Make it executable
-6. Create and edit service file
-7. Reload daemon
-8. Enable service file that will execute your script at startup
+
+## Then
+
+0. It will move your script to other directory (if you want to)
+1. Make it executable
+2. Create and edit service file
+3. Reload daemon
+4. Enable service file
+5. Print useful commands to manage the service file
 
 -----------------------------------------------------------------------
 
-# How to download/install ?
-Type the following commands in your terminal
-* `git clone https://github.com/1RaY-1/linux-startup`
-* `cd linux-startup`
-
-And run it
-* `sudo bash makeit-startup.sh`
-
-Or install it and then run
-
-* `sudo bash install.sh`
-* `sudo makeit-startup`
+## Installing
+You can run install.sh (it'll simply move the script to a *bin* directory), but it's not obligatory
 
 -----------------------------------------------------------------------
 
-# Usage
-If you just downloaded this program.
+## Running
+Simply execute the script without any arguments (**with BASH**):
 ```
 sudo bash makeit-startup.sh
 ```
-If you installed it.
-```
-sudo makeit-startup
-```
-Then you simply have to do few things.
-
-1. Enter full path to the script that you wanna make startup.
-
-2. Decide if you want to move it to other directory or not.
-
-3. Agree to continue.
-
-You can watch [example video](https://github.com/1RaY-1/linux-startup/blob/main/example.mp4), to see that it's very easy to use it.
 
 -----------------------------------------------------------------------
 
@@ -74,7 +55,7 @@ So
 ```
 systemctl status YOUR-SERVICE-FILE
 ```
-You recive an error which is saying something like: **Permissions denied**, then you probably need to edit **/etc/selinux/config** and change line:
+You recive an error which is saying something like: **Permissions denied** (will happen on SELinux distros) , then you probably need to edit **/etc/selinux/config** and change line:
 ```
 SELINUX=enforcing 
 ```
@@ -92,10 +73,12 @@ If you encounter more problems, please tell me by creating an [issue](https://gi
 
 -----------------------------------------------------------------------
 
-# Note few things:
-* Before making any script startup, make sure you added a [shebang](https://en.wikipedia.org/wiki/Shebang_(Unix)) in there.
-* Your startup script will execute commands as superuser.
-* If you wanna understand how to manually make any script startup, here some links that will help you:
+# More:
+
+* If you don't know what you are doing then don't run it, or try it out in a VM
+* You can try this out on a virtual machine before making any changes on your host, for better stability
+* Before making any script startup, make sure it has a [shebang](https://en.wikipedia.org/wiki/Shebang_(Unix))
+* If you want to understand how to manually make any script startup, here some links that will help you:
 
 https://stackoverflow.com/questions/12973777/how-to-run-a-shell-script-at-startup
 
