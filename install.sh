@@ -40,7 +40,7 @@ do_it(){
         else echo "Exiting...";exit 0
         fi
     fi
-    echo "Installing..."
+    echo "Copying '${needed_file}' to '${needed_dir}' as '${needed_file%.*}'..."
     sleep 0.5
 
     cp ${needed_file} ${needed_dir}${needed_file%.*}
@@ -48,9 +48,9 @@ do_it(){
 
     echo "
 Done!
-Now you can run this program by typing: 'sudo ${needed_file%.*}'
+Now you can run this script with: 'sudo ${needed_file%.*}'
 
-To remove it, type: sudo rm ${needed_dir}${needed_file%.*}
+To remove it: sudo rm ${needed_dir}${needed_file%.*}
 
 For more information, read README.md 
 "
