@@ -20,7 +20,7 @@ currentv=1.3 # <-- Version
 # Ask user if the startup script should be restarted every time it stops or not
 # Add an option to rename the .service file
 # Maybe add an option to create a text file with a list of those commands (stop, start service file, etc...) mentioned at the end
-# Test it more & Make it for stable/reliable
+# Test it more & Make it more stable/reliable
 
 # exit on any error
 set -e
